@@ -1,0 +1,96 @@
+.root {
+	-fx-background-image: url("images/Dominion_Background.png");
+	-fx-background-position: center;
+}
+
+.layout {
+	-fx-background-color: #DDD6C5BB;
+    -fx-background-radius: 10px;
+	-fx-padding: 25px;
+}
+.result-layout {
+	-fx-background-color: #DDD6C5;
+    -fx-background-radius: 10px;
+	-fx-padding: 25px;
+}
+.result-label {
+    -fx-font-weight: bold;
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 27px;
+    -fx-text-fill: #333333;
+	-fx-text-alignment: center;
+	-fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+.label {
+    -fx-font-weight: bold;
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 21px;
+    -fx-text-fill: #333333;
+	-fx-text-alignment: center;
+	-fx-alignment: center;
+    -fx-padding: 10px;
+}
+.info-label {
+    -fx-font-weight: bold;
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 27px;
+    -fx-text-fill: #EEEEEE;
+	-fx-text-alignment: center;
+    -fx-padding: 10px;
+    -fx-background-color: #0000cc;
+    -fx-background-radius: 100px;
+}
+.player-label {
+    -fx-font-weight: bold;
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 21px;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px;
+	-fx-text-alignment: center;
+	-fx-alignment: center;
+    -fx-background-color: #DDD6C5;
+    -fx-background-radius: 100px;
+}
+.counter-label {
+    -fx-font-weight: bold;
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 11px;
+    -fx-text-fill: #222222;
+	-fx-text-alignment: center;
+    -fx-padding: 5px;
+    -fx-background-color: #00cc00;
+    -fx-background-radius: 100px;
+}
+
+.list-cell {
+	-fx-font-family: "Lucida Calligraphy";
+    -fx-font-size: 12px;
+    -fx-text-fill: #222222;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+}
+
+.list-cell:even { /* <=== changed to even */
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+}
+
+.list-cell:even { /* <=== changed to even */
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
