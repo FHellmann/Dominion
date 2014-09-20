@@ -26,6 +26,7 @@ The game is implemented with a few "artificial intelligence" and random CPU-Play
 
 If you wanne play the game, just see the help below.
 
+<pre>
 You have the following options:
 	-h or -?                will show you the help.
 	-r <filename>           allows you to record the game to a file. This file will be stored in the temp-directory/Dominion/.
@@ -41,3 +42,4 @@ You have the following options:
 	Robot1=<name>           A roboter played by the cpu.
 
 All players have to get different names.
+</pre>
