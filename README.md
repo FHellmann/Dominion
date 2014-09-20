@@ -1,7 +1,7 @@
 Dominion
 ========
 
-This is the Dominion (http://en.wikipedia.org/wiki/Dominion_(card_game)) Game implemented with Java 8. I implemented this Project in a project at the University of Applied Science Munich.
+This is the Dominion (http://en.wikipedia.org/wiki/Dominion_(card_game)) Game implemented with Java 8.
 
 Program Architecture
 -------
