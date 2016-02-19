@@ -198,6 +198,19 @@ public final class CheckFactory {
 	}
 
 	/**
+	 * Generates a check for proving if the players hand has more or equal then the specified amount of
+	 * cards.
+	 *
+	 * @param amount
+	 *            of cards.
+	 * @return a check object for reviewing.
+	 */
+	public static Check isHandcardSizeBiggerOrEqual(final int amount) {
+		return (game, player, card) -> new MoveResult(player.getCardDeckHand().size() >= amount,
+				"The players hand card size isn't >= " + amount + ".");
+	}
+
+	/**
 	 * Generates a check for proving if the players hand has equal amount of cards then the
 	 * specified amount of cards.
 	 *
@@ -221,6 +234,19 @@ public final class CheckFactory {
 	public static Check isHandcardSizeLower(final int amount) {
 		return (game, player, card) -> new MoveResult(player.getCardDeckHand().size() < amount,
 				"The players hand card size isn't < " + amount + ".");
+	}
+
+	/**
+	 * Generates a check for proving if the players hand has lower or equal amount of cards then the
+	 * specified amount of cards.
+	 *
+	 * @param amount
+	 *            of cards.
+	 * @return a check object for reviewing.
+	 */
+	public static Check isHandcardSizeLowerOrEqual(final int amount) {
+		return (game, player, card) -> new MoveResult(player.getCardDeckHand().size() <= amount,
+				"The players hand card size isn't <= " + amount + ".");
 	}
 
 	/**
