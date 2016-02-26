@@ -37,7 +37,7 @@ public class LibraryActionQuit extends BaseMove {
 
 	@Override
 	public void onFire() {
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 		getGame().setState(State.ACTION);
 	}
 }

@@ -3,7 +3,6 @@ package edu.hm.cs.fh.dominion.logic.moves.card;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
 import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
@@ -27,6 +26,6 @@ public class ChapelActionQuit extends BaseMove {
     public void onFire() {
         ChapelAction.resetCallCounter();
         getGame().setState(State.ACTION);
-        getGame().setToResolveActionCard(null);
+        getGame().popToResolveActionCard();
     }
 }

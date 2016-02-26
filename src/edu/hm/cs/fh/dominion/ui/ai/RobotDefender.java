@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.ui;
+package edu.hm.cs.fh.dominion.ui.ai;
 
 import java.util.List;
 import java.util.Optional;

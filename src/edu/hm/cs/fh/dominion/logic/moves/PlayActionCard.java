@@ -49,7 +49,7 @@ public class PlayActionCard extends BaseMove {
 		player.getActions().decrement();
 
 		if (getGame().getState() == State.ACTION_RESOLVE) {
-			getGame().setToResolveActionCard(card);
+			getGame().addToResolveActionCard(card);
 		}
 		if (card.hasType(Type.ATTACK)) {
 			getGame().setState(State.ATTACK);

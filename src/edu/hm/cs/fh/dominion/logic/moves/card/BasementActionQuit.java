@@ -36,6 +36,6 @@ public class BasementActionQuit extends BaseMove {
 	public void onFire() {
 		getPlayer().get().pollCards(BasementAction.getAndResetCallCounter());
 		getGame().setState(State.ACTION);
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 	}
 }

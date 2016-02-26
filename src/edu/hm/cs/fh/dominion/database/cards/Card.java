@@ -100,7 +100,7 @@ public interface Card {
 		/**
 		 * Creates a new type.
 		 */
-		private Type() {
+		Type() {
 			name = ResourceDelegator.getI18N(toString().toLowerCase());
 		}
 

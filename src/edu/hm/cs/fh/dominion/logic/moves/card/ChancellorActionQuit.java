@@ -35,6 +35,6 @@ public class ChancellorActionQuit extends BaseMove {
 	@Override
 	public void onFire() {
 		getGame().setState(State.ACTION);
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 	}
 }

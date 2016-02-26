@@ -2,7 +2,6 @@ package edu.hm.cs.fh.dominion.logic.moves.card;
 
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.State;
-import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.Settings;

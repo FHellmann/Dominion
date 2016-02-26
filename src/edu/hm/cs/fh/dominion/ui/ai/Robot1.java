@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.ui;
+package edu.hm.cs.fh.dominion.ui.ai;
 
 import java.util.List;
 import java.util.Observable;
@@ -9,6 +9,7 @@ import java.util.Observable;
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
+import edu.hm.cs.fh.dominion.ui.AbstractRegisteredPlayer;
 
 /**
  * A robot player which choose every time the first move.

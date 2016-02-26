@@ -45,6 +45,6 @@ public class FeastAction extends BaseMove {
 		getGame().addCardToWaste(player.getCardDeckPlayed(), KingdomCard.FEAST);
 		getGame().getCardFromSupply(getCard().get(), player.getCardDeckStacker());
 		getGame().setState(State.ACTION);
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 	}
 }

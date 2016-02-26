@@ -45,6 +45,6 @@ public class MoneylenderAction extends BaseMove {
 		getGame().addCardToWaste(player.getCardDeckHand(), TreasuryCard.COPPER);
 		player.getMoney().add(Settings.MONEYLENDER_ADD_COINS);
 		getGame().setState(State.ACTION);
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 	}
 }

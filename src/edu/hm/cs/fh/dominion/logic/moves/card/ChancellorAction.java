@@ -38,6 +38,6 @@ public class ChancellorAction extends BaseMove {
 		final WriteablePlayer player = getPlayer().get();
 		WriteableCardDeck.move(player.getCardDeckStacker(), player.getCardDeckPull());
 		getGame().setState(State.ACTION);
-		getGame().setToResolveActionCard(null);
+		getGame().popToResolveActionCard();
 	}
 }

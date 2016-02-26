@@ -138,11 +138,10 @@ public enum KingdomCard implements Card {
         player.getActions().increment();
     }),
     */
-    // /** Throne room card */
-    // THRONEROOM(game -> {
-    // // Muss vorerst nicht implementiert werden
-    // game.setState(State.ACTION_RESOLVE);
-    // }),
+    /**
+     * Throne room card
+     */
+    THRONEROOM(game -> game.setState(State.ACTION_RESOLVE)),
     // /** Rebuilding card */
     // REBUILDING(game -> {
     // game.setState(State.ACTION_RESOLVE);

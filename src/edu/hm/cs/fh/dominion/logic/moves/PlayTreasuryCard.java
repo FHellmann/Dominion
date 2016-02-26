@@ -38,8 +38,8 @@ public class PlayTreasuryCard extends BaseMove {
 	@Override
 	public void onFire() {
 		final WriteablePlayer player = getPlayer().get();
-		final Card card = getCard().get();
+		final TreasuryCard card = (TreasuryCard) getCard().get();
 		WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), card);
-		player.getMoney().add(((TreasuryCard) card).getCoints());
+		player.getMoney().add(card.getCoints());
 	}
 }

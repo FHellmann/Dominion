@@ -24,7 +24,7 @@ public class SystemTestReplayer {
 	 * @throws IOException
 	 *             ignored!
 	 */
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String[] args) throws Exception {
 		final String testFile = "=HumanTest";
 		DominionMain.main(new String[] { Replayer.class.getSimpleName() + testFile,
 				Replayer.class.getSimpleName() + testFile, Replayer.class.getSimpleName() + testFile,

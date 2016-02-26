@@ -5,9 +5,9 @@ package edu.hm.cs.fh.dominion.logic.moves.card;
 
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.State;
+import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
 import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
@@ -18,7 +18,7 @@ import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
  * @author Fabio Hellmann, fhellman@hm.edu
  * @version 06.05.2014
  */
-public class WorkshopAction extends BaseMove {
+public class ThroneroomActionResolve extends BaseMove {
 	/**
 	 * Creates a new attack reaction move.
 	 *
@@ -29,20 +29,27 @@ public class WorkshopAction extends BaseMove {
 	 * @param card
 	 *            to play.
 	 */
-	public WorkshopAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
+	public ThroneroomActionResolve(final WriteableGame game, final WriteablePlayer player, final Card card) {
 		super(game, player, card);
 		addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
 		addCheck(CheckFactory.isCurrentPlayer());
-		addCheck(CheckFactory.isCardInSupply());
-		addCheck(CheckFactory.isCardAvailable());
-		addCheck(CheckFactory.isInCardPrice(Settings.WORKSHOP_MAX_CARD_COST));
-		addCheck(CheckFactory.isResolveCard(KingdomCard.WORKSHOP));
+		addCheck(CheckFactory.isHandcard());
+		addCheck(CheckFactory.isCardType(KingdomCard.class));
+		addCheck(CheckFactory.isResolveCard(KingdomCard.THRONEROOM));
 	}
 
 	@Override
 	public void onFire() {
-		getGame().getCardFromSupply(getCard().get(), getPlayer().get().getCardDeckStacker());
-		getGame().setState(State.ACTION);
+		final Card baseCard = getCard().get();
+		// Wähle eine Aktionskarte aus deiner Hand. Spiele diese Aktionskarte zweimal aus.
+		final KingdomCard card = (KingdomCard) baseCard;
+		// Dieses Prinzip funktioniert nicht bei Angriffs-Karten!
+		card.resolve(getGame());
+		card.resolve(getGame());
+		final WriteablePlayer player = getPlayer().get();
+		WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), baseCard);
+
 		getGame().popToResolveActionCard();
+		getGame().setState(State.ACTION);
 	}
 }

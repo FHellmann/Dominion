@@ -19,37 +19,32 @@ import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
  * @version 06.05.2014
  */
 public class ThroneroomAction extends BaseMove {
-	/**
-	 * Creates a new attack reaction move.
-	 *
-	 * @param game
-	 *            to reference.
-	 * @param player
-	 *            who want to act.
-	 * @param card
-	 *            to play.
-	 */
-	public ThroneroomAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
-		super(game, player, card);
-		addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
-		addCheck(CheckFactory.isCurrentPlayer());
-		addCheck(CheckFactory.isHandcard());
-		addCheck(CheckFactory.isCardType(KingdomCard.class));
-		// addCheck(CheckFactory.isResolveCard(KingdomCard.THRONEROOM));
-	}
+    /**
+     * Creates a new attack reaction move.
+     *
+     * @param game   to reference.
+     * @param player who want to act.
+     * @param card   to play.
+     */
+    public ThroneroomAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
+        super(game, player, card);
+        addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
+        addCheck(CheckFactory.isCurrentPlayer());
+        addCheck(CheckFactory.isHandcard());
+        addCheck(CheckFactory.isCardType(KingdomCard.class));
+        addCheck(CheckFactory.isResolveCard(KingdomCard.THRONEROOM));
+    }
 
-	@Override
-	public void onFire() {
-		final Card baseCard = getCard().get();
-		// Wähle eine Aktionskarte aus deiner Hand. Spiele diese Aktionskarte zweimal aus.
-		final KingdomCard card = (KingdomCard) baseCard;
-		// Dieses Prinzip funktioniert nicht bei Angriffs-Karten!
-		card.resolve(getGame());
-		card.resolve(getGame());
-		final WriteablePlayer player = getPlayer().get();
-		WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), baseCard);
+    @Override
+    public void onFire() {
+        getGame().popToResolveActionCard();
 
-		getGame().setToResolveActionCard(null);
-		getGame().setState(State.ACTION);
-	}
+        final Card baseCard = getCard().get();
+        // Wähle eine Aktionskarte aus deiner Hand. Spiele diese Aktionskarte zweimal aus.
+        final KingdomCard card = (KingdomCard) baseCard;
+        getGame().addToResolveActionCard(card);
+        getGame().addToResolveActionCard(card);
+        final WriteablePlayer player = getPlayer().get();
+        WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), baseCard);
+    }
 }

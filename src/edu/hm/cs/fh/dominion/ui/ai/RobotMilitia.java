@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.ui;
+package edu.hm.cs.fh.dominion.ui.ai;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.moves.BuyCard;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
-import edu.hm.cs.fh.dominion.logic.moves.card.WitchAttack;
+import edu.hm.cs.fh.dominion.logic.moves.card.MilitiaAttack;
 
 /**
  * A robot player which act randomly.
@@ -19,9 +19,9 @@ import edu.hm.cs.fh.dominion.logic.moves.card.WitchAttack;
  * @author Fabio Hellmann, fhellman@hm.edu
  * @version 21.04.2014
  */
-public class RobotSorcerer extends AbstractRobotAI {
+public class RobotMilitia extends AbstractRobotAI {
 	/**
-	 * Creates a new sorcerer.
+	 * Creates a new militia.
 	 *
 	 * @param game
 	 *            of datastoreage.
@@ -30,18 +30,18 @@ public class RobotSorcerer extends AbstractRobotAI {
 	 * @param name
 	 *            of the robot.
 	 */
-	public RobotSorcerer(final ReadonlyGame game, final Logic logic, final String name) {
+	public RobotMilitia(final ReadonlyGame game, final Logic logic, final String name) {
 		super(game, logic, name);
 	}
 
 	@Override
 	protected Optional<Move> onPreferedBuyCard(final List<Move> buyMoves) {
-		return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.WITCH)
+		return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.MILITIA)
 				.findFirst();
 	}
 
 	@Override
 	protected Optional<Move> onPreferedMove(final List<Move> allMoves) {
-		return allMoves.parallelStream().filter(move -> move instanceof WitchAttack).findFirst();
+		return allMoves.parallelStream().filter(move -> move instanceof MilitiaAttack).findFirst();
 	}
 }
