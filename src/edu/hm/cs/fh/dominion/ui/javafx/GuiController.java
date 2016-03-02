@@ -11,6 +11,7 @@ import edu.hm.cs.fh.dominion.logic.moves.ExitGame;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
 import edu.hm.cs.fh.dominion.logic.moves.card.ShowCards;
+import edu.hm.cs.fh.dominion.ui.JavaFxPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,6 +30,7 @@ import javafx.scene.transform.Rotate;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.DoubleFunction;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
@@ -130,7 +132,6 @@ public class GuiController implements Initializable, Observer {
     private Pane handCardPane;
     @FXML
     private ImageView cardDeckStacker;
-    private String logicListener;
 
     /**
      * Get the player or an empty optional.
@@ -203,17 +204,19 @@ public class GuiController implements Initializable, Observer {
             return;
         }
 
-        Platform.runLater(() -> update(getGame(), getGame().getCurrentPlayer(), Optional.ofNullable((Move) object)));
+        final Optional<ReadonlyPlayer> javaFxPlayer = getGame().getPlayers()
+                .filter(player -> player instanceof JavaFxPlayer)
+                .findFirst();
+        Platform.runLater(() -> update(getGame(), javaFxPlayer, Optional.ofNullable((Move) object)));
     }
 
     /**
      * Update the gui only if a move is present.
-     *
+     *  @param game         with all data.
      * @param player       who called the update.
-     * @param game         with all data.
      * @param optionalMove which has been played.
      */
-    private void update(final ReadonlyGame game, final ReadonlyPlayer player, final Optional<Move> optionalMove) {
+    private void update(final ReadonlyGame game, final Optional<ReadonlyPlayer> player, final Optional<Move> optionalMove) {
         if (optionalMove.isPresent()) {
             showCardPane.getChildren().clear();
 
@@ -224,7 +227,7 @@ public class GuiController implements Initializable, Observer {
                 // Clean for the next player
                 playedCardPane.getChildren().clear();
             } else if (move instanceof ViewGameResult) {
-                updateResultPane(game, player);
+                player.ifPresent(playerTmp -> updateResultPane(game, playerTmp));
                 resultPane.setVisible(true);
             } else if (move instanceof ShowCards) {
                 final ShowCards showCards = (ShowCards) move;
@@ -264,7 +267,7 @@ public class GuiController implements Initializable, Observer {
      * @param game         with all the data.
      * @param javaFxPlayer who playes the gui.
      */
-    private void updateContentData(final ReadonlyGame game, final ReadonlyPlayer javaFxPlayer) {
+    private void updateContentData(final ReadonlyGame game, final Optional<ReadonlyPlayer> javaFxPlayer) {
         final ReadonlyPlayer currPlayer = game.getCurrentPlayer();
 
         actions.setText(Integer.toString(currPlayer.getActions().getCount()));
@@ -285,10 +288,12 @@ public class GuiController implements Initializable, Observer {
         final Optional<ReadonlyPlayer> player4 = getPlayerAtIndex(players, 2);
 
         // JavaFX Player
-        setPlayerData(labelPlayerGui, game, Optional.of(javaFxPlayer));
-        updateStacker(cardDeckStacker, Optional.of(javaFxPlayer));
-        updateDisplayedCards(handCardPane, javaFxPlayer.getCardDeckHand().stream().collect(Collectors.toList()),
-                CARD_SIZE_PLAYER_ME, true);
+        setPlayerData(labelPlayerGui, game, javaFxPlayer);
+        updateStacker(cardDeckStacker, javaFxPlayer);
+        javaFxPlayer.ifPresent(player ->
+                updateDisplayedCards(handCardPane, player.getCardDeckHand().stream().collect(Collectors.toList()),
+                CARD_SIZE_PLAYER_ME, true)
+        );
 
         // Player 1
         setPlayerData(labelPlayer1, game, player2);

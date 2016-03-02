@@ -67,7 +67,7 @@ public interface WriteableCardDeck extends ReadonlyCardDeck {
 		}
 
 		final List<Card> cardsToMove = cardDeckFrom.stream().collect(Collectors.toList());
-		cardsToMove.stream().forEach(card -> cardDeckTo.add(card));
+		cardsToMove.stream().forEach(cardDeckTo::add);
 		cardDeckFrom.clear();
 	}
 

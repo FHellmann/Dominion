@@ -88,7 +88,7 @@ public interface UserInterface extends Observer {
                         // This is essential for JavaFx
                         // Without the sleep, the GUI wouldn't be able to update
                         // and the user wouldn't see some changing at his enemies
-                        Thread.sleep(250);
+                        Thread.sleep(200);
                     } catch (final Exception e) {
                         // Can be ignored in normal case
                         // e.printStackTrace();
@@ -100,7 +100,7 @@ public interface UserInterface extends Observer {
                     }
                 });
             }
-        });
+        }, "Game-Loop");
         gameLoopThread.setDaemon(true);
         gameLoopThread.start();
     }

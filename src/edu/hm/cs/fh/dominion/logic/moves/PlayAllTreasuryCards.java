@@ -33,12 +33,14 @@ public class PlayAllTreasuryCards extends BaseMove {
     public void onFire() {
         // filter all money cards from the players hand
         final WriteablePlayer player = getPlayer().get();
-        getPlayer().get().getCardDeckHand().stream()
+        final List<TreasuryCard> cards = getPlayer().get().getCardDeckHand().stream()
                 .filter(card -> card instanceof TreasuryCard)
                 .map(card -> (TreasuryCard) card)
-                .forEach(card -> {
-                    WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), card);
-                    player.getMoney().add(card.getCoints());
-                });
+                .collect(Collectors.toList());
+
+        cards.forEach(card -> {
+            WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), card);
+            player.getMoney().add(card.getCoints());
+        });
     }
 }
