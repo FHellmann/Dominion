@@ -94,7 +94,7 @@ public class CardDeck implements WriteableCardDeck {
 
 	@Override
 	public String toString() {
-		return cards.stream().map(Object::toString).collect(Collectors.joining(", "));
+		return cards.stream().map(Card::getName).collect(Collectors.joining(", "));
 	}
 
 	/**
