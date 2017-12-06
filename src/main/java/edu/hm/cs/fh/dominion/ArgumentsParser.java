@@ -97,9 +97,7 @@ public class ArgumentsParser {
      */
     public boolean isJavaFxApplication() {
         return players.values().parallelStream()
-                .filter(key -> key.equals(JavaFxPlayer.class.getSimpleName()))
-                .findFirst()
-                .isPresent();
+                .anyMatch(key -> key.equals(JavaFxPlayer.class.getSimpleName()));
     }
 
     /**
