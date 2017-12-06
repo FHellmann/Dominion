@@ -1,49 +1,72 @@
-group 'edu.hm.cs.vss'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'edu.hm.cs.fh.dominion.DominionMain'
+buildscript {
+    repositories {
+        google()
+        jcenter()
     }
 }
 
-sourceSets {
-    api
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
+subprojects { project ->
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
-    test {
-        java {
-            srcDir 'src/test/java'
-        }
-        resources {
-            srcDir 'src/test/resources'
-        }
+
+    tasks.withType(Jar) {
+        duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
+subprojects { project ->
+    repositories {
+        google()
+        jcenter()
+    }
 
-javadoc {
-    source sourceSets.api.allJava
-}
+    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+    apply plugin: 'findbugs'
 
-test {
-    afterTest { test, result -> println "Executing test ${test.name} [${test.className}] with result: ${result.resultType}"}
+    checkstyle {
+        toolVersion = '8.5'
+        configFile = rootProject.file('stylechecker/checkstyle.xml')
+        configProperties.checkStyleConfigDir = rootProject.rootDir
+        sourceSets = sourceSets.main
+        reportsDir = file("$project.buildDir/reports/checkstyle")
+    }
+
+    task checkstyle(type: Checkstyle) {
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        // empty classpath
+        classpath = files()
+    }
+
+    /*
+    pmd {
+        ignoreFailures = true
+        sourceSets = [sourceSets.main]
+        reportsDir = file("$project.buildDir/reports/pmd")
+        ruleSetFiles = files("codestyle/stylechecker/pmd.xml")
+    }
+
+    task pmd(type: pmd) {
+
+    }
+
+    findbugs {
+        ignoreFailures = true
+        toolVersion = "2.0.1"
+        sourceSets = [sourceSets.main]
+        reportsDir = file("$project.buildDir/reports/findbugs")
+        effort = "max"
+    }
+    */
+
+    afterEvaluate {
+        if (project.tasks.findByName('check')) {
+            check.dependsOn('checkstyle')
+        }
+    }
 }
