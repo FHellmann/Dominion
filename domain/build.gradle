@@ -1,38 +1,4 @@
-group 'edu.hm.cs.fh.dominion'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
+apply plugin: "java"
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/i18n'
-        }
-    }
-    test {
-        java {
-            srcDir 'src/test/java'
-        }
-        resources {
-            srcDir 'src/test/i18n'
-        }
-    }
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
-
-test {
-    afterTest { test, result -> println "Executing test ${test.name} [${test.className}] with result: ${result.resultType}"}
-}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

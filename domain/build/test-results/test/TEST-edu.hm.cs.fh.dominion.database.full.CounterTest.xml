@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.hm.cs.fh.dominion.database.full.CounterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-12-12T15:44:25" hostname="hcm166" time="0.0">
+  <properties/>
+  <testcase name="increment" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <testcase name="add" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <testcase name="set" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <testcase name="decrement" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <testcase name="getLowerLimit" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <testcase name="getCount" classname="edu.hm.cs.fh.dominion.database.full.CounterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

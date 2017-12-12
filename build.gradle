@@ -1,72 +1,57 @@
 buildscript {
     repositories {
-        google()
         jcenter()
+        mavenCentral()
     }
 }
 
-subprojects { project ->
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+allprojects {
+    version = '1.0'
+    ext {
+        appName = "Dominion"
     }
 
-    tasks.withType(Jar) {
-        duplicatesStrategy = DuplicatesStrategy.FAIL
-    }
-}
-
-subprojects { project ->
     repositories {
-        google()
-        jcenter()
+        mavenLocal()
+        mavenCentral()
     }
 
-    apply plugin: 'checkstyle'
-    apply plugin: 'pmd'
-    apply plugin: 'findbugs'
+}
 
-    checkstyle {
-        toolVersion = '8.5'
-        configFile = rootProject.file('stylechecker/checkstyle.xml')
-        configProperties.checkStyleConfigDir = rootProject.rootDir
-        sourceSets = sourceSets.main
-        reportsDir = file("$project.buildDir/reports/checkstyle")
+project(":app") {
+    apply plugin: "java"
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        compile project(':domain')
+        compile project(":core")
+
+        testCompile group: 'junit', name: 'junit', version: '4.11'
     }
+}
 
-    task checkstyle(type: Checkstyle) {
-        source 'src'
-        include '**/*.java'
-        exclude '**/gen/**'
+project(":core") {
+    apply plugin: "java"
 
-        // empty classpath
-        classpath = files()
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        compile project(':domain')
+
+        testCompile group: 'junit', name: 'junit', version: '4.11'
     }
+}
 
-    /*
-    pmd {
-        ignoreFailures = true
-        sourceSets = [sourceSets.main]
-        reportsDir = file("$project.buildDir/reports/pmd")
-        ruleSetFiles = files("codestyle/stylechecker/pmd.xml")
-    }
+project(":domain") {
+    apply plugin: "java"
 
-    task pmd(type: pmd) {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-    }
-
-    findbugs {
-        ignoreFailures = true
-        toolVersion = "2.0.1"
-        sourceSets = [sourceSets.main]
-        reportsDir = file("$project.buildDir/reports/findbugs")
-        effort = "max"
-    }
-    */
-
-    afterEvaluate {
-        if (project.tasks.findByName('check')) {
-            check.dependsOn('checkstyle')
-        }
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
     }
 }

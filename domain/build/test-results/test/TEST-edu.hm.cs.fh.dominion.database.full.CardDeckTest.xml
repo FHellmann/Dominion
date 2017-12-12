@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.hm.cs.fh.dominion.database.full.CardDeckTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2017-12-12T15:44:25" hostname="hcm166" time="0.0">
+  <properties/>
+  <testcase name="remove" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="stream" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="contains" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="add" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="poll" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="size" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="clear" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="isEmpty" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <testcase name="shuffle" classname="edu.hm.cs.fh.dominion.database.full.CardDeckTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

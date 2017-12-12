@@ -1,43 +1,32 @@
-group 'edu.hm.cs.fh.dominion'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: "java"
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+project.ext.mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
+
+task run(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    ignoreExitValue = true
 }
 
-mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
+task debug(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    ignoreExitValue = true
+    debug = true
+}
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/i18n'
-        }
+task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
     }
-    test {
-        java {
-            srcDir 'src/test/java'
-        }
-        resources {
-            srcDir 'src/test/i18n'
-        }
-    }
 }
 
-dependencies {
-    compile project(':core')
-    compile project(':domain')
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
-
-test {
-    afterTest { test, result -> println "Executing test ${test.name} [${test.className}] with result: ${result.resultType}"}
-}
+dist.dependsOn classes
