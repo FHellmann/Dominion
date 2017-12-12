@@ -26,7 +26,8 @@ project(":app") {
 
     dependencies {
         compile project(':domain')
-        compile project(":core")
+        compile project(':core')
+        compile project(':i18n')
 
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
@@ -52,6 +53,19 @@ project(":domain") {
     targetCompatibility = 1.8
 
     dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
+}
+
+project(":i18n") {
+    apply plugin: "java"
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        compile project(':domain')
+        compile project(':core')
         testCompile group: 'junit', name: 'junit', version: '4.11'
     }
 }

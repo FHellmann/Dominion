@@ -3,6 +3,8 @@
  */
 package edu.hm.cs.fh.dominion.i18n;
 
+import edu.hm.cs.fh.dominion.database.cards.Card;
+
 import java.util.Optional;
 
 /**
@@ -20,16 +22,4 @@ public interface I18N {
 	 * @return the localized text.
 	 */
 	Optional<String> getTranslation(String key);
-
-	default Optional<String> getMoveText(String key) {
-		return getTranslation(key + "_move");
-	}
-
-	default Optional<String> getCardName(String key) {
-		return getTranslation(key);
-	}
-
-	default Optional<String> getCardText(String key) {
-		return getTranslation(key + "_text");
-	}
 }

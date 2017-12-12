@@ -62,11 +62,6 @@ public abstract class AbstractPlayer implements UserInterface {
 		return Optional.empty();
 	}
 
-	@Override
-	public Move selectMove(final List<Move> moves) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
 	/**
 	 * Get all the game states as string.
 	 *
