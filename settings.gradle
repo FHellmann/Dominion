@@ -1,2 +1,6 @@
-include 'app', 'domain', 'core', 'i18n'
+rootProject.name = "dominion"
 
+include 'app'
+include 'domain'
+include 'core'
+include 'i18n'

@@ -1,8 +1,16 @@
-apply plugin: "java"
+apply plugin: 'application'
 
-sourceCompatibility = 1.8
+mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
 
-project.ext.mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
+dependencies {
+    compile project(':domain')
+    compile project(':core')
+    compile project(':i18n')
+}
+
+run.doFirst {
+    // Environment variables go here.
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName

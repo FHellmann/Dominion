@@ -1,0 +1,18 @@
+subprojects {
+    apply plugin: 'checkstyle'
+    checkstyle {
+        ignoreFailures = true
+        configFile = rootProject.file('stylechecker/checkstyle.xml')
+        toolVersion = '8.4'
+    }
+
+    apply plugin: 'findbugs'
+    findbugs {
+        ignoreFailures = true
+    }
+
+    apply plugin: 'pmd'
+    pmd {
+        configFile = rootProject.file('stylechecker/pmd.xml')
+    }
+}

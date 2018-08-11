@@ -23,7 +23,7 @@ public final class I18nDelegator implements I18N {
 		try {
 			resource = new I18nFilesHandler();
 		} catch (final MissingResourceException e) {
-			resource = new I18nConstantsHandler();
+			throw new RuntimeException(e);
 		}
 	}
 
