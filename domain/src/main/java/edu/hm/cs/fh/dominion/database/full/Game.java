@@ -3,12 +3,12 @@
  */
 package edu.hm.cs.fh.dominion.database.full;
 
-import java.util.*;
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyCardDeck;
 import edu.hm.cs.fh.dominion.database.ReadonlyPlayer;
 import edu.hm.cs.fh.dominion.database.cards.Card;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * The datastore root for the game.

@@ -51,7 +51,7 @@ public class BasementAction extends BaseMove {
 	 *
 	 * @return the call counter.
 	 */
-	public static int getAndResetCallCounter() {
+	static int getAndResetCallCounter() {
 		final int calls = callCounter;
 		callCounter = 0;
 		return calls;

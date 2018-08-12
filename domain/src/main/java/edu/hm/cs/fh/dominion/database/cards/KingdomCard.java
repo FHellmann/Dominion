@@ -10,6 +10,7 @@ import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 /**
  * Kingdom cards as enums.
@@ -240,7 +241,7 @@ public enum KingdomCard implements Card<KingdomMetaData> {
     /**
      * The resolve-method content.
      */
-    private final Resolvable resolvable;
+    private final Consumer<WriteableGame> resolvable;
     private final KingdomMetaData kingdomMetaData;
 
     /**
@@ -248,7 +249,7 @@ public enum KingdomCard implements Card<KingdomMetaData> {
      *
      * @param resolvable method for the current player.
      */
-    KingdomCard(final Resolvable resolvable, final int cost, final Type... types) {
+    KingdomCard(final Consumer<WriteableGame> resolvable, final int cost, final Type... types) {
         this.resolvable = resolvable;
         kingdomMetaData = KingdomMetaData.create(cost, Arrays.asList(types));
     }
@@ -259,7 +260,7 @@ public enum KingdomCard implements Card<KingdomMetaData> {
      * @param game to modify data.
      */
     public void resolve(final WriteableGame game) {
-        resolvable.resolve(game);
+        resolvable.accept(game);
     }
 
     @Override
@@ -270,21 +271,5 @@ public enum KingdomCard implements Card<KingdomMetaData> {
     @Override
     public String getName() {
         return name().toLowerCase(Locale.getDefault());
-    }
-
-    /**
-     * Interface for interaction.
-     *
-     * @author Fabio Hellmann, info@fabio-hellmann.de
-     * @version 09.04.2014
-     */
-    @FunctionalInterface
-    private interface Resolvable {
-        /**
-         * Solve the logical part of this card.
-         *
-         * @param game to acess manipulating functions.
-         */
-        void resolve(WriteableGame game);
     }
 }

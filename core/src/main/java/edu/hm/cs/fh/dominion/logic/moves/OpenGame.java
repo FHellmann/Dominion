@@ -5,6 +5,7 @@ package edu.hm.cs.fh.dominion.logic.moves;
 
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
+import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
 /**
  * A move to open the game.
@@ -13,21 +14,22 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
  * @version 15.04.2014
  */
 public class OpenGame extends BaseMove {
-	/**
-	 * Creates a new open game move.
-	 *
-	 * @param game
-	 *            to reference.
-	 */
-	public OpenGame(final WriteableGame game) {
-		super(game);
-		addCheck(CheckFactory.isCurrentState(State.INITIALIZE));
-		addCheck(CheckFactory.isInPlayerRange());
-	}
+    /**
+     * Creates a new open game move.
+     *
+     * @param game to reference.
+     */
+    public OpenGame(final WriteableGame game) {
+        super(game);
+        addCheck(CheckFactory.isCurrentState(State.INITIALIZE));
+        addCheck(CheckFactory.isInPlayerRange());
+    }
 
-	@Override
-	public void onFire() {
-		getGame().setCurrentPlayer(getGame().getRwPlayers().findFirst().get());
-		getGame().setState(State.SETUP);
-	}
+    @Override
+    public void onFire() {
+        final WriteablePlayer player = getGame().getRwPlayers().findFirst()
+                .orElseThrow(() -> new IllegalStateException("No player was found"));
+        getGame().setCurrentPlayer(player);
+        getGame().setState(State.SETUP);
+    }
 }

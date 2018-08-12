@@ -62,7 +62,7 @@ public class RunGame extends BaseMove {
         getGame().addSupplyCard(TreasuryCard.SILVER, Settings.AMOUNT_OF_SILVER);
         getGame().addSupplyCard(TreasuryCard.GOLD, Settings.AMOUNT_OF_GOLD);
 
-        // Default pull carddeck set and startsettings for every player
+        // Default pull card deck set and start settings for every player
         getGame().getRwPlayers().forEach(
                 player -> {
                     final WriteableCardDeck deckPull = player.getCardDeckPull();

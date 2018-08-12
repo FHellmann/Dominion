@@ -17,41 +17,43 @@ import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
  * @version 12.04.2014
  */
 public class BuyCard extends BaseMove {
-	/**
-	 * Creates a new buy card move.
-	 *
-	 * @param game
-	 *            to reference.
-	 * @param player
-	 *            who want to act.
-	 * @param card
-	 *            to play.
-	 */
-	public BuyCard(final WriteableGame game, final WriteablePlayer player, final Card card) {
-		super(game, player, card);
-		addCheck(CheckFactory.isCurrentState(State.PURCHASE));
-		addCheck(CheckFactory.isCurrentPlayer());
-		addCheck(CheckFactory.hasPurchaseLeft());
-		addCheck(CheckFactory.isCardInSupply());
-		addCheck(CheckFactory.isCardAvailable());
-		addCheck(CheckFactory.hasMoneyToBuyCard());
-	}
+    /**
+     * Creates a new buy card move.
+     *
+     * @param game   to reference.
+     * @param player who want to act.
+     * @param card   to play.
+     */
+    public BuyCard(final WriteableGame game, final WriteablePlayer player, final Card card) {
+        super(game, player, card);
+        addCheck(CheckFactory.isCurrentState(State.PURCHASE));
+        addCheck(CheckFactory.isCurrentPlayer());
+        addCheck(CheckFactory.hasPurchaseLeft());
+        addCheck(CheckFactory.isCardInSupply());
+        addCheck(CheckFactory.isCardAvailable());
+        addCheck(CheckFactory.hasMoneyToBuyCard());
+    }
 
-	@Override
-	public void onFire() {
-		getPlayer().get().getPurchases().decrement();
-		getPlayer().get().getMoney().add(-getCard().get().getMetaData().getCost());
-		getGame().getCardFromSupply(getCard().get(), getPlayer().get().getCardDeckStacker());
+    @Override
+    public void onFire() {
+        final WriteablePlayer player = getPlayer().orElseThrow(() -> new IllegalStateException("No player found"));
+        final Card card = getCard().orElseThrow(() -> new IllegalStateException("No card found"));
 
-		final long emptyCardCount = getGame().getSupplyCardSet().parallel()
-				.filter(card -> getGame().getSupplyCardCount(card) == 0).count();
+        player.getPurchases().decrement();
+        player.getMoney().add(-card.getMetaData().getCost());
+        getGame().getCardFromSupply(card, player.getCardDeckStacker());
 
-		final long emptyProvinceCount = getGame().getSupplyCardSet().parallel()
-				.filter(card -> VictoryCard.PROVINCE == card).filter(card -> getGame().getSupplyCardCount(card) == 0)
-				.count();
+        final long emptyCardCount = getGame().getSupplyCardSet()
+                .filter(supplyCard -> getGame().getSupplyCardCount(supplyCard) == 0)
+                .count();
 
-		if (emptyCardCount >= Settings.EMPTY_SUPPLY_CARDS || emptyProvinceCount == Settings.EMPTY_PROVINCE_CARD) {
-			getGame().setOver();
-		}
-	}
+        final long emptyProvinceCount = getGame().getSupplyCardSet()
+                .filter(supplyCard -> VictoryCard.PROVINCE == supplyCard)
+                .filter(supplyCard -> getGame().getSupplyCardCount(supplyCard) == 0)
+                .count();
+
+        if (emptyCardCount >= Settings.EMPTY_SUPPLY_CARDS || emptyProvinceCount == Settings.EMPTY_PROVINCE_CARD) {
+            getGame().setOver();
+        }
+    }
 }

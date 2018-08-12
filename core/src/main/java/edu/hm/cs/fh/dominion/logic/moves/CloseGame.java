@@ -17,36 +17,38 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
  */
 public class CloseGame extends BaseMove {
 
-	/**
-	 * Creates a new close game move.
-	 *
-	 * @param game
-	 *            to reference.
-	 */
-	public CloseGame(final WriteableGame game) {
-		super(game);
-		addCheck(CheckFactory.isCurrentState(State.OVER));
-	}
+    /**
+     * Creates a new close game move.
+     *
+     * @param game to reference.
+     */
+    public CloseGame(final WriteableGame game) {
+        super(game);
+        addCheck(CheckFactory.isCurrentState(State.OVER));
+    }
 
-	@Override
-	public void onFire() {
-		getGame().getRwPlayers().forEach(player -> {
-			// Add all carddecks together
-				final WriteableCardDeck cardDeckStacker = player.getCardDeckStacker();
-				WriteableCardDeck.move(player.getCardDeckPull(), cardDeckStacker);
-				WriteableCardDeck.move(player.getCardDeckHand(), cardDeckStacker);
-				WriteableCardDeck.move(player.getCardDeckPlayed(), cardDeckStacker);
+    @Override
+    public void onFire() {
+        getGame().getRwPlayers().forEach(player -> {
+            // Add all card decks together
+            final WriteableCardDeck cardDeckStacker = player.getCardDeckStacker();
+            WriteableCardDeck.move(player.getCardDeckPull(), cardDeckStacker);
+            WriteableCardDeck.move(player.getCardDeckHand(), cardDeckStacker);
+            WriteableCardDeck.move(player.getCardDeckPlayed(), cardDeckStacker);
 
-				// Search for all victory cards and add the points
-				final int points = cardDeckStacker.stream().parallel().filter(card -> card instanceof VictoryCard)
-						.mapToInt(card -> ((VictoryCard) card).getMetaData().getPoints()).sum();
-				player.getVictoryPoints().add(points);
+            // Search for all victory cards and add the points
+            final int points = cardDeckStacker.stream()
+                    .filter(card -> card instanceof VictoryCard)
+                    .mapToInt(card -> ((VictoryCard) card).getMetaData().getPoints())
+                    .sum();
+            player.getVictoryPoints().add(points);
 
-				// don't forget the gardens!!!
-				cardDeckStacker.stream().filter(card -> card == KingdomCard.GARDENS)
-						.forEach(card -> ((KingdomCard) card).resolve(getGame()));
-			});
+            // don't forget the gardens!!!
+            cardDeckStacker.stream()
+                    .filter(card -> card == KingdomCard.GARDENS)
+                    .forEach(card -> ((KingdomCard) card).resolve(getGame()));
+        });
 
-		getGame().setState(State.RESULTS);
-	}
+        getGame().setState(State.RESULTS);
+    }
 }
