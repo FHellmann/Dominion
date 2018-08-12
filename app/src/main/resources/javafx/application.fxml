@@ -6,8 +6,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
     <children>
         <Pane layoutX="0.0" layoutY="0.0" prefHeight="1080.0" prefWidth="1920.0">
             <children>
@@ -123,6 +123,7 @@
                 </Pane>
                 <Pane fx:id="showCardPane" layoutX="1221.0" layoutY="527.0" prefHeight="125.587890625"
                       prefWidth="135.0"/>
+                <!-- <ListView fx:id="moveSelectionMenu" layoutX="1431.0" layoutY="666.0" prefHeight="400.0" prefWidth="475.0"/> -->
             </children>
         </Pane>
     </children>

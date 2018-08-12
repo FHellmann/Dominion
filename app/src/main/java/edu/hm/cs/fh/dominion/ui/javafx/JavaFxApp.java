@@ -2,10 +2,10 @@ package edu.hm.cs.fh.dominion.ui.javafx;
 
 import edu.hm.cs.fh.dominion.ArgumentsParser;
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.full.Game;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.logic.Logic;
-import edu.hm.cs.fh.dominion.logic.Settings;
 import edu.hm.cs.fh.dominion.ui.Player;
 import edu.hm.cs.fh.dominion.ui.PublicViewer;
 import edu.hm.cs.fh.dominion.ui.Recorder;
@@ -22,7 +22,6 @@ import javafx.stage.StageStyle;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class JavaFxApp extends Application {
@@ -42,18 +41,15 @@ public class JavaFxApp extends Application {
         final List<UserInterface> players = argsParser
                 .getPlayers()
                 .map(entry -> {
-                    final Optional<String> playerByName = Player.findPlayerClassByName(entry.getValue());
-                    if (playerByName.isPresent()) {
-                        try {
-                            final Class<UserInterface> uiType = (Class<UserInterface>) Class.forName(playerByName.get());
-                            final Constructor<UserInterface> ctor = uiType.getDeclaredConstructor(ReadonlyGame.class,
-                                    Logic.class, String.class);
-                            return ctor.newInstance(game, logic, entry.getKey());
-                        } catch (final Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        throw new RuntimeException("No player found for " + entry.getValue());
+                    final String playerByName = Player.findPlayerClassByName(entry.getValue())
+                            .orElseThrow(() -> new RuntimeException("No player found for " + entry.getValue()));
+                    try {
+                        final Class<UserInterface> uiType = (Class<UserInterface>) Class.forName(playerByName);
+                        final Constructor<UserInterface> ctor = uiType.getDeclaredConstructor(ReadonlyGame.class,
+                                Logic.class, String.class);
+                        return ctor.newInstance(game, logic, entry.getKey());
+                    } catch (final Exception e) {
+                        throw new RuntimeException(e);
                     }
                 })
                 .peek(System.out::println)

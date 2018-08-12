@@ -1,17 +1,15 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.logic.cards;
+package edu.hm.cs.fh.dominion.database.cards;
 
-import edu.hm.cs.fh.dominion.database.cards.Card;
-import edu.hm.cs.fh.dominion.database.cards.KingdomMetaData;
-import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Kingdom cards as enums.
@@ -267,6 +265,11 @@ public enum KingdomCard implements Card<KingdomMetaData> {
     @Override
     public KingdomMetaData getMetaData() {
         return kingdomMetaData;
+    }
+
+    @Override
+    public String getName() {
+        return name().toLowerCase(Locale.getDefault());
     }
 
     /**

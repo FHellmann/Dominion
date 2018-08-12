@@ -3,12 +3,12 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
 
 /**
  * A move to buy a card.

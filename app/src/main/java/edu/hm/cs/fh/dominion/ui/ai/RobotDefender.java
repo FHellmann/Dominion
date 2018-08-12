@@ -3,15 +3,15 @@
  */
 package edu.hm.cs.fh.dominion.ui.ai;
 
-import java.util.List;
-import java.util.Optional;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.Logic;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.moves.BuyCard;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.card.MoatAttackDefend;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A robot player which act randomly.

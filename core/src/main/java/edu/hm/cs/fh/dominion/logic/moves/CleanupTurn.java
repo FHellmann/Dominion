@@ -3,10 +3,10 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
 
 /**
  * A move to clean up players turn and check if game is over or not.

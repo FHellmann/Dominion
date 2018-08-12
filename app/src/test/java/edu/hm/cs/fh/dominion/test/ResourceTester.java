@@ -3,11 +3,11 @@
  */
 package edu.hm.cs.fh.dominion.test;
 
-import java.util.Arrays;
-
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
+
+import java.util.Arrays;
 
 /**
  * @author Fabio Hellmann, info@fabio-hellmann.de

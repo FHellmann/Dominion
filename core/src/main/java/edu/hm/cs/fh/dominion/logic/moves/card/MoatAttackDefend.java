@@ -3,15 +3,15 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves.card;
 
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.cards.Card;
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+
+import java.util.stream.Stream;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.

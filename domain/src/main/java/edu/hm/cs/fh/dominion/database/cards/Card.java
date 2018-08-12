@@ -23,9 +23,7 @@ public interface Card<M extends Card.MetaData> {
      *
      * @return the name.
      */
-    default String getName() {
-        return getClass().getSimpleName().toLowerCase();
-    }
+    String getName();
 
     /**
      * Find all cards matching the type.
@@ -68,7 +66,7 @@ public interface Card<M extends Card.MetaData> {
         /**
          * Curse
          */
-        CURSE;
+        CURSE
     }
 
     /**

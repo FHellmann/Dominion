@@ -3,6 +3,8 @@
  */
 package edu.hm.cs.fh.dominion.ui.javafx;
 
+import edu.hm.cs.fh.dominion.i18n.I18nDelegator;
+import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.List;
+import java.util.MissingFormatArgumentException;
+import java.util.stream.Collectors;
 
 /**
  * The move selector will be displayed as an overlay over the primarystage.
@@ -27,7 +31,7 @@ public class MoveSelectorOverlay {
     /**
      * The possible moves which will be displayed in a list.
      */
-    private final List<Move> moves;
+    private final List<I18nMove> moves;
     /**
      * The players choise for his move.
      */
@@ -39,7 +43,7 @@ public class MoveSelectorOverlay {
      * @param possibleMoves to display.
      */
     public MoveSelectorOverlay(final List<Move> possibleMoves) {
-        moves = possibleMoves;
+        moves = possibleMoves.stream().map(I18nMove::new).collect(Collectors.toList());
     }
 
     /**
@@ -57,7 +61,7 @@ public class MoveSelectorOverlay {
         stage.setResizable(false);
 
         // Display all possible moves in a listview on the right bottom
-        final ListView<Move> moveList = new ListView<>(FXCollections.observableArrayList(moves));
+        final ListView<I18nMove> moveList = new ListView<>(FXCollections.observableArrayList(moves));
         moveList.getStylesheets().add(getClass().getClassLoader().getResource("javafx/application.css").toExternalForm());
         moveList.setLayoutX(1500.0);
         moveList.setLayoutY(659.0);
@@ -65,7 +69,7 @@ public class MoveSelectorOverlay {
         moveList.setPrefHeight(407.0);
         moveList.setOnMouseClicked(event -> {
             if (!moveList.getSelectionModel().getSelectedItems().isEmpty()) {
-                chosenMove = moveList.getSelectionModel().getSelectedItem();
+                chosenMove = moveList.getSelectionModel().getSelectedItem().move;
                 stage.close();
             }
         });
@@ -85,5 +89,29 @@ public class MoveSelectorOverlay {
         stage.close();
 
         return chosenMove;
+    }
+
+    private static final class I18nMove {
+        private final Move move;
+
+        private I18nMove(Move move) {
+            this.move = move;
+        }
+
+        @Override
+        public String toString() {
+            try {
+                // the text without placeholder
+                return I18nDelegator.getI18N(move.getClass().getSimpleName().toLowerCase());
+            } catch (final MissingFormatArgumentException e) {
+                // the text with placeholder
+                return ((BaseMove) move).getCard()
+                        .map(card -> I18nDelegator.getI18N(
+                                move.getClass().getSimpleName().toLowerCase(),
+                                I18nDelegator.getI18N(card.getName())
+                        ))
+                        .orElse("UNKNOWN");
+            }
+        }
     }
 }

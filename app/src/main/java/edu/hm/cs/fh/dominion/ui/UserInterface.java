@@ -3,16 +3,13 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Observer;
-import java.util.Optional;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.database.ReadonlyPlayer;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
+
+import java.util.*;
 
 /**
  * The base methods for every ui.
@@ -60,8 +57,9 @@ public interface UserInterface extends Observer {
     static void loop(final ReadonlyGame game, final Logic logic, final Collection<UserInterface> uis) {
         while (game.getState() != State.QUIT) {
             uis.stream().filter(user -> user.getPlayer().isPresent()).forEach(user -> {
-                final List<Move> moves = logic.findApplicableMoves(user.getPlayer().get());
-
+                final List<Move> moves = user.getPlayer()
+                        .map(logic::findApplicableMoves)
+                        .orElse(Collections.emptyList());
                 if (!moves.isEmpty()) {
                     final Move move = user.selectMove(moves);
                     logic.fireMove(move);
@@ -82,7 +80,9 @@ public interface UserInterface extends Observer {
         final Thread gameLoopThread = new Thread(() -> {
             while (game.getState() != State.QUIT) {
                 uis.stream().filter(user -> user.getPlayer().isPresent()).forEach(user -> {
-                    final List<Move> moves = logic.findApplicableMoves(user.getPlayer().get());
+                    final List<Move> moves = user.getPlayer()
+                            .map(logic::findApplicableMoves)
+                            .orElse(Collections.emptyList());
 
                     try {
                         // This is essential for JavaFx

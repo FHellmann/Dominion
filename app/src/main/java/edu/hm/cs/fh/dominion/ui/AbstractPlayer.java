@@ -3,19 +3,17 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.IntSupplier;
-import java.util.stream.Collectors;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.database.ReadonlyPlayer;
 import edu.hm.cs.fh.dominion.database.cards.Card;
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.logic.Logic;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
-import edu.hm.cs.fh.dominion.logic.moves.Move;
+
+import java.util.Optional;
+import java.util.function.IntSupplier;
+import java.util.stream.Collectors;
 
 /**
  * A nameless ui player. (For example a logger)

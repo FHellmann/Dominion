@@ -3,11 +3,11 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
 
 /**
  * A move to close the game.

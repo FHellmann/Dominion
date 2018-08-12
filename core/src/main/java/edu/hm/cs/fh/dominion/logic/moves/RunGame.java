@@ -3,14 +3,14 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
-import java.util.stream.Stream;
-
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
-import edu.hm.cs.fh.dominion.logic.Settings;
+
+import java.util.stream.Stream;
 
 /**
  * A move to run the game.

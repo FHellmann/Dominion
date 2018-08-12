@@ -3,15 +3,15 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
+import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.Settings;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * A factory class for generating checks.

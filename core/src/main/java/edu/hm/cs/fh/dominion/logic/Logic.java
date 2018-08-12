@@ -3,32 +3,18 @@
  */
 package edu.hm.cs.fh.dominion.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyPlayer;
+import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
-import edu.hm.cs.fh.dominion.logic.moves.BuyCard;
-import edu.hm.cs.fh.dominion.logic.moves.CleanupTurn;
-import edu.hm.cs.fh.dominion.logic.moves.CloseGame;
-import edu.hm.cs.fh.dominion.logic.moves.ExitGame;
-import edu.hm.cs.fh.dominion.logic.moves.Move;
-import edu.hm.cs.fh.dominion.logic.moves.MoveResult;
-import edu.hm.cs.fh.dominion.logic.moves.NoAction;
-import edu.hm.cs.fh.dominion.logic.moves.NoPurchase;
-import edu.hm.cs.fh.dominion.logic.moves.OpenGame;
-import edu.hm.cs.fh.dominion.logic.moves.PlayActionCard;
-import edu.hm.cs.fh.dominion.logic.moves.PlayAllTreasuryCards;
-import edu.hm.cs.fh.dominion.logic.moves.PlayTreasuryCard;
-import edu.hm.cs.fh.dominion.logic.moves.RunGame;
-import edu.hm.cs.fh.dominion.logic.moves.SelectKingdomCard;
-import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
+import edu.hm.cs.fh.dominion.logic.moves.*;
 import edu.hm.cs.fh.dominion.logic.moves.card.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * The game controler handles the game events and checks if the events are correct or not.

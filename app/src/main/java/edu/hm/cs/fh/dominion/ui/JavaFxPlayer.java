@@ -7,7 +7,6 @@ import edu.hm.cs.fh.dominion.ui.io.ConsoleIO;
 import edu.hm.cs.fh.dominion.ui.javafx.MoveSelectorOverlay;
 import javafx.application.Platform;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -28,9 +27,8 @@ public class JavaFxPlayer extends AbstractHumanPlayer {
      * @param game  of datastoreage.
      * @param logic for every logical check.
      * @param name  of the player.
-     * @throws IOException
      */
-    public JavaFxPlayer(final ReadonlyGame game, final Logic logic, final String name) throws IOException {
+    public JavaFxPlayer(final ReadonlyGame game, final Logic logic, final String name) {
         super(game, logic, name, new ConsoleIO());
     }
 
@@ -49,7 +47,7 @@ public class JavaFxPlayer extends AbstractHumanPlayer {
      *
      * @param run that has to be called on JFX thread.
      */
-    public void run(final Runnable run) {
+    private void run(final Runnable run) {
         // normaly we should stay in another thread... so let's do the else branch
         if (Platform.isFxApplicationThread()) {
             // we are already in the FX-Thread

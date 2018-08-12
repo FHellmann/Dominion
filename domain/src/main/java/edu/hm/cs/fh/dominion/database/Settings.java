@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.logic;
+package edu.hm.cs.fh.dominion.database;
 
 import java.util.Random;
 

@@ -4,12 +4,7 @@
 package edu.hm.cs.fh.dominion.i18n;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * The handler for loading the content from resource files.
@@ -45,7 +40,7 @@ public class I18nFilesHandler implements I18N {
 		final String path = getClass().getPackage().getName().replaceAll("\\.", ESCAPED_FILE_SEPERATOR);
 
 		// create the ResourceBundle
-		bundleI18N = ResourceBundle.getBundle(path + ESCAPED_FILE_SEPERATOR + DOMINION_LANGUAGE, locale);
+		bundleI18N = ResourceBundle.getBundle(DOMINION_LANGUAGE, locale);
 	}
 
 	@Override

@@ -3,6 +3,8 @@
  */
 package edu.hm.cs.fh.dominion.database.cards;
 
+import java.util.Locale;
+
 /**
  * Treasury cards as enums.
  *
@@ -26,5 +28,10 @@ public enum TreasuryCard implements Card<TreasuryMetaData> {
 	@Override
 	public TreasuryMetaData getMetaData() {
 		return treasuryMetaData;
+	}
+
+	@Override
+	public String getName() {
+		return name().toLowerCase(Locale.getDefault());
 	}
 }
