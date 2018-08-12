@@ -3,8 +3,6 @@
  */
 package edu.hm.cs.fh.dominion.i18n;
 
-import edu.hm.cs.fh.dominion.database.cards.Card;
-
 import java.util.Optional;
 
 /**

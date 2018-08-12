@@ -58,7 +58,7 @@ public class MoveSelectorOverlay {
 
         // Display all possible moves in a listview on the right bottom
         final ListView<Move> moveList = new ListView<>(FXCollections.observableArrayList(moves));
-        moveList.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        moveList.getStylesheets().add(getClass().getClassLoader().getResource("javafx/application.css").toExternalForm());
         moveList.setLayoutX(1500.0);
         moveList.setLayoutY(659.0);
         moveList.setPrefWidth(406.0);

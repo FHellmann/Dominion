@@ -303,14 +303,14 @@ public class GuiController implements Initializable, Observer {
         // Player 2
         setPlayerData(labelPlayer2, game, player3);
         updateStacker(cardDeckStackerPlayer2, player3);
-        updateDisplayedCards(handCardPanePlayer2, player3.isPresent() ? player3.get().getCardDeckHand().stream()
-                .collect(Collectors.toList()) : null, CARD_SIZE_PLAYERS_OTHER, false);
+        updateDisplayedCards(handCardPanePlayer2, player3.map(readonlyPlayer -> readonlyPlayer.getCardDeckHand().stream()
+                .collect(Collectors.toList())).orElse(null), CARD_SIZE_PLAYERS_OTHER, false);
 
         // Player 3
         setPlayerData(labelPlayer3, game, player4);
         updateStacker(cardDeckStackerPlayer3, player4);
-        updateDisplayedCards(handCardPanePlayer3, player4.isPresent() ? player4.get().getCardDeckHand().stream()
-                .collect(Collectors.toList()) : null, CARD_SIZE_PLAYERS_OTHER, false);
+        updateDisplayedCards(handCardPanePlayer3, player4.map(readonlyPlayer -> readonlyPlayer.getCardDeckHand().stream()
+                .collect(Collectors.toList())).orElse(null), CARD_SIZE_PLAYERS_OTHER, false);
 
         // The supply cards
         final double cardWidth = supplyCardPane.getWidth()
@@ -352,7 +352,7 @@ public class GuiController implements Initializable, Observer {
 
         // Add the data
         cards.stream()
-                .filter(card -> card != null)
+                .filter(Objects::nonNull)
                 .forEach(card -> {
                     final Image image = cardManager.getCardImage(card, cardWidth - CARD_OFFSET);
 
@@ -374,15 +374,18 @@ public class GuiController implements Initializable, Observer {
      */
     private void updateSupply(final ReadonlyGame game, final double cardWidth) {
         // Sort the cards
-        final List<Card> supplyCardsTreasury = game.getSupplyCardSet().filter(card -> card instanceof TreasuryCard)
+        final List<Card> supplyCardsTreasury = game.getSupplyCardSet()
+                .filter(card -> card instanceof TreasuryCard)
+                .sorted(CARD_COMPARATOR)
                 .collect(Collectors.toList());
-        supplyCardsTreasury.sort(CARD_COMPARATOR);
-        final List<Card> supplyCardsVictory = game.getSupplyCardSet().filter(card -> card instanceof VictoryCard)
+        final List<Card> supplyCardsVictory = game.getSupplyCardSet()
+                .filter(card -> card instanceof VictoryCard)
+                .sorted(CARD_COMPARATOR)
                 .collect(Collectors.toList());
-        supplyCardsVictory.sort(CARD_COMPARATOR);
-        final List<Card> supplyCardsKingdom = game.getSupplyCardSet().filter(card -> card instanceof KingdomCard)
+        final List<Card> supplyCardsKingdom = game.getSupplyCardSet().
+                filter(card -> card instanceof KingdomCard)
+                .sorted(CARD_COMPARATOR)
                 .collect(Collectors.toList());
-        supplyCardsKingdom.sort(CARD_COMPARATOR);
 
         // Add the cards all together
         final List<Card> completeSupply = new ArrayList<>();
@@ -445,7 +448,7 @@ public class GuiController implements Initializable, Observer {
             if (firstStackerCard.isPresent()) {
                 view.setImage(cardManager.getCardImage(firstStackerCard.get(), view.getFitWidth()));
             } else {
-                view.setImage(new Image(getClass().getResourceAsStream("images/cardback.jpg")));
+                view.setImage(new Image(getClass().getClassLoader().getResourceAsStream("images/cardback.jpg")));
             }
         } else {
             view.setVisible(false);
@@ -472,15 +475,15 @@ public class GuiController implements Initializable, Observer {
                 final double imageViewLocationY = pane.getLayoutY() - pane.getHeight();
 
                 final double angle = 60.0 / cardsToDisplay.size();
-                double startAngle = -angle * (cardsToDisplay.size() / 2);
+                double startAngle = -angle * (cardsToDisplay.size() / 2.0);
 
                 for (final Card card : cardsToDisplay) {
                     final Image image;
                     if (showCards) {
                         image = cardManager.getCardImage(card, cardWidth);
                     } else {
-                        image = new Image(getClass().getResourceAsStream("images/cardback.jpg"), cardWidth, 0, true,
-                                true);
+                        image = new Image(getClass().getClassLoader().getResourceAsStream(
+                                "images/cardback.jpg"), cardWidth, 0, true,true);
                     }
                     final ImageView imageView = new ImageView(image);
                     imageView.setPreserveRatio(true);

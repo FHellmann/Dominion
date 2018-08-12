@@ -3,15 +3,16 @@
  */
 package edu.hm.cs.fh.dominion.ui.javafx;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import javafx.scene.image.Image;
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
+import javafx.scene.image.Image;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * The CardImageLoader handles the loading of all the cards. And keeps the memory low as possible.
@@ -19,7 +20,7 @@ import edu.hm.cs.fh.dominion.logic.cards.KingdomCard;
  * @author Fabio Hellmann, info@fabio-hellmann.de
  * @version 18.05.2014
  */
-public class CardImageLoader {
+class CardImageLoader {
 	/** Map the card to a path where it's image is. */
 	private final Map<Card, String> cardImageMap = new HashMap<>();
 	/**
@@ -31,7 +32,7 @@ public class CardImageLoader {
 	/**
 	 * Creates a new image manager for cards.
 	 */
-	public CardImageLoader() {
+	CardImageLoader() {
 		Stream.of(TreasuryCard.values()).forEach(card -> cardImageMap.put(card, findImage(card)));
 		Stream.of(VictoryCard.values()).forEach(card -> cardImageMap.put(card, findImage(card)));
 		Stream.of(KingdomCard.values()).forEach(card -> cardImageMap.put(card, findImage(card)));
@@ -46,7 +47,7 @@ public class CardImageLoader {
 	 *            of the image.
 	 * @return the loaded image.
 	 */
-	public Image getCardImage(final Card card, final double prefWidth) {
+	Image getCardImage(final Card card, final double prefWidth) {
 		if (!cache.containsKey(card) || cache.get(card).getWidth() != prefWidth) {
 			cache.put(card, new Image(cardImageMap.get(card), prefWidth, 0, true, true));
 		}
@@ -61,6 +62,8 @@ public class CardImageLoader {
 	 * @return the image path.
 	 */
 	private String findImage(final Card card) {
-		return getClass().getResource("images/" + card.toString() + ".jpg").toString();
+		return Optional.ofNullable(getClass().getClassLoader().getResource("images/" + card.toString() + ".jpg"))
+				.orElseThrow(RuntimeException::new)
+				.toString();
 	}
 }

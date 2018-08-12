@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.*?>
 <?scenebuilder-stylesheet application.css?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
     <children>
@@ -36,13 +31,13 @@
                         <ImageView fx:id="cardDeckStacker" fitHeight="165.5" fitWidth="97.99998474121094" layoutX="14.0"
                                    layoutY="14.0" pickOnBounds="true" preserveRatio="false">
                             <image>
-                                <Image url="@../../../../../../../../resources/images/cardback.jpg"/>
+                                <Image url="@../images/cardback.jpg"/>
                             </image>
                         </ImageView>
                         <ImageView fitHeight="165.5" fitWidth="97.99998474121094" layoutX="14.0" layoutY="205.0"
                                    pickOnBounds="true" preserveRatio="false">
                             <image>
-                                <Image url="@../../../../../../../../resources/images/cardback.jpg"/>
+                                <Image url="@../images/cardback.jpg"/>
                             </image>
                         </ImageView>
                     </children>
@@ -61,19 +56,19 @@
                 <ImageView fx:id="cardDeckStackerPlayer1" fitHeight="125.587890625" fitWidth="66.99998474121094"
                            layoutX="14.0" layoutY="482.0" pickOnBounds="true" preserveRatio="false">
                     <image>
-                        <Image url="@../../../../../../../../resources/images/cardback.jpg"/>
+                        <Image url="@../images/cardback.jpg"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="cardDeckStackerPlayer2" fitHeight="125.587890625" fitWidth="66.99998474121094"
                            layoutX="14.0" layoutY="280.0" pickOnBounds="true" preserveRatio="false">
                     <image>
-                        <Image url="@../../../../../../../../resources/images/cardback.jpg"/>
+                        <Image url="@../images/cardback.jpg"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="cardDeckStackerPlayer3" fitHeight="125.587890625" fitWidth="66.99998474121094"
                            layoutX="14.0" layoutY="86.0" pickOnBounds="true" preserveRatio="false">
                     <image>
-                        <Image url="@../../../../../../../../resources/images/cardback.jpg"/>
+                        <Image url="@../images/cardback.jpg"/>
                     </image>
                 </ImageView>
                 <Pane fx:id="handCardPanePlayer3" layoutX="87.0" layoutY="196.0" prefHeight="53.0" prefWidth="135.0"/>
@@ -121,7 +116,7 @@
                         <ImageView fitHeight="188.0" fitWidth="121.0" layoutX="-4.0" layoutY="-7.0" pickOnBounds="true"
                                    preserveRatio="false">
                             <image>
-                                <Image url="@../../../../../../../../resources/images/waste.jpg"/>
+                                <Image url="@../images/waste.jpg"/>
                             </image>
                         </ImageView>
                     </children>

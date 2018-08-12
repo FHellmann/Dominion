@@ -3,15 +3,17 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.util.Observable;
-import java.util.stream.Collectors;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.logic.Logic;
+import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
 import edu.hm.cs.fh.dominion.logic.moves.card.ShowCards;
 import edu.hm.cs.fh.dominion.ui.io.ConsoleIO;
 import edu.hm.cs.fh.dominion.ui.io.ContentIO;
+
+import java.util.List;
+import java.util.Observable;
+import java.util.stream.Collectors;
 
 /**
  * A logger writes every update to a log.txt file.
@@ -57,5 +59,10 @@ public class PublicViewer extends AbstractPlayer {
 				inOut.sendOutput(strBuilder.toString());
 			}
 		}
+	}
+
+	@Override
+	public Move selectMove(List<Move> moves) {
+		throw new RuntimeException("This method should not be called");
 	}
 }

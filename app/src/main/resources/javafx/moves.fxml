@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.*?>
 <?scenebuilder-stylesheet application.css?>
 
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
   <children>
     <ListView layoutX="1587.0" layoutY="509.0" prefHeight="557.0" prefWidth="319.0" styleClass="move-list" />

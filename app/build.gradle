@@ -3,38 +3,11 @@ apply plugin: 'application'
 mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
 
 dependencies {
-    compile project(':domain')
-    compile project(':core')
-    compile project(':i18n')
+    implementation project(':domain')
+    implementation project(':core')
+    implementation project(':i18n')
 }
 
 run.doFirst {
     // Environment variables go here.
 }
-
-task run(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    ignoreExitValue = true
-}
-
-task debug(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    ignoreExitValue = true
-    debug = true
-}
-
-task dist(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-
-    manifest {
-        attributes 'Main-Class': project.mainClassName
-    }
-}
-
-dist.dependsOn classes

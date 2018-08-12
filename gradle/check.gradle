@@ -12,7 +12,4 @@ subprojects {
     }
 
     apply plugin: 'pmd'
-    pmd {
-        configFile = rootProject.file('stylechecker/pmd.xml')
-    }
 }

@@ -19,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +33,9 @@ public class JavaFxApp extends Application {
      * @param game       to create the objects.
      * @param logic      to create the objects.
      * @return a list with the players.
-     * @throws IOException is possible thrown by the file parser while extracting the replayers count.
      */
     private static List<UserInterface> createPlayers(final ArgumentsParser argsParser, final WriteableGame game,
-                                                     final Logic logic) throws IOException {
+                                                     final Logic logic) {
         final List<UserInterface> uis = new ArrayList<>();
         // Intialize players
         @SuppressWarnings("unchecked")
@@ -72,10 +70,10 @@ public class JavaFxApp extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setIconified(true);
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/dominion_icon.png")));
+        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("images/dominion_icon.png")));
 
         // create Loader
-        final FXMLLoader myLoader = new FXMLLoader(getClass().getResource("application.fxml"));
+        final FXMLLoader myLoader = new FXMLLoader(getClass().getClassLoader().getResource("javafx/application.fxml"));
 
         // load the fxml
         final Parent loadScreen = myLoader.load();
@@ -109,7 +107,7 @@ public class JavaFxApp extends Application {
         final AnchorPane root = new AnchorPane();
         root.setManaged(true);
         root.getChildren().addAll(loadScreen);
-        root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        root.getStylesheets().add(getClass().getClassLoader().getResource("javafx/application.css").toExternalForm());
 
         // Fit mainContainer to layout
         AnchorPane.setTopAnchor(loadScreen, 0.0);

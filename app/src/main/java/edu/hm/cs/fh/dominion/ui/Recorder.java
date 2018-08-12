@@ -3,25 +3,21 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyCardDeck;
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.database.ReadonlyPlayer;
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.logic.Logic;
+import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.ui.io.ContentIO;
 import edu.hm.cs.fh.dominion.ui.io.FileIO;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The Recorder writes every Move-Object and the Game-State to a file.
@@ -174,5 +170,10 @@ public class Recorder extends AbstractPlayer {
         final StringBuilder carddeckData = new StringBuilder();
         carddeckData.append("{ ").append(carddeck.toString()).append(" }");
         return carddeckData.toString();
+    }
+
+    @Override
+    public Move selectMove(List<Move> moves) {
+        throw new RuntimeException("This method should not be called");
     }
 }
