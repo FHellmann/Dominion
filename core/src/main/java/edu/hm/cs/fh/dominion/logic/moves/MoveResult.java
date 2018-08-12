@@ -23,7 +23,7 @@ public class MoveResult {
 	 * @param msg
 	 *            if the move is inpossible otherwise <code>null</code>.
 	 */
-	public MoveResult(final boolean possible, final String msg) {
+	MoveResult(final boolean possible, final String msg) {
 		this.possible = possible;
 		this.msg = possible ? "" : msg;
 	}

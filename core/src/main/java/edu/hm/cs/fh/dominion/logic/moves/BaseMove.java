@@ -3,14 +3,14 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.CheckFactory.Check;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A basic move which every move extends.
@@ -94,12 +94,10 @@ public abstract class BaseMove implements Move {
 	}
 
 	@Override
-	public final MoveResult fire() {
-		final MoveResult result = test();
-		if (result.isPossible()) {
+	public final void fire() {
+		if (test().isPossible()) {
 			onFire();
 		}
-		return result;
 	}
 
 	/**

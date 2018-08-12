@@ -25,7 +25,7 @@ public interface Move {
 	 *
 	 * @return the result.
 	 */
-	MoveResult fire();
+	void fire();
 
 	/**
 	 * Filters from all moves of the list the possible ones.

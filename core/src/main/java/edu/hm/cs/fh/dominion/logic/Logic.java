@@ -124,12 +124,10 @@ public class Logic {
      * Executes a move.
      *
      * @param move to execute.
-     * @return a result of the execution.
      */
-    public MoveResult fireMove(final Move move) {
-        final MoveResult result = move.fire();
+    public void fireMove(final Move move) {
+        move.fire();
         game.notifyObservers(move);
-        return result;
     }
 
     /**
