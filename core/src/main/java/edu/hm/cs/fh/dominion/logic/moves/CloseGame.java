@@ -8,6 +8,7 @@ import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
 
 /**
  * A move to close the game.
@@ -24,7 +25,7 @@ public class CloseGame extends BaseMove {
      */
     public CloseGame(final WriteableGame game) {
         super(game);
-        addCheck(CheckFactory.isCurrentState(State.OVER));
+        addCheck(new IsCurrentStateCheck(State.OVER));
     }
 
     @Override

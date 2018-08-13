@@ -11,7 +11,9 @@ import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
 
 import java.util.stream.Stream;
 
@@ -34,8 +36,8 @@ public class BureaucratAttackDefend extends BaseMove implements ShowCards {
 	 */
 	public BureaucratAttackDefend(final WriteableGame game, final WriteablePlayer player, final Card card) {
 		super(game, player, card);
-		addCheck(CheckFactory.isCurrentState(State.ATTACK));
-		addCheck(CheckFactory.isCurrentPlayer());
+		addCheck(new IsCurrentStateCheck(State.ATTACK));
+		addCheck(new IsCurrentPlayerCheck());
 		addCheck(CheckFactory.isNotAttacker());
 		addCheck(CheckFactory.isHandcard());
 		addCheck(CheckFactory.isCardType(VictoryCard.class));
@@ -51,6 +53,6 @@ public class BureaucratAttackDefend extends BaseMove implements ShowCards {
 
 	@Override
 	public Stream<Card> getCards() {
-		return Stream.of(getCard().get());
+		return Stream.of(getCard().orElseThrow(IllegalStateException::new));
 	}
 }

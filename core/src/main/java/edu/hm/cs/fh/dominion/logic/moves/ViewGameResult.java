@@ -5,6 +5,7 @@ package edu.hm.cs.fh.dominion.logic.moves;
 
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
 
 /**
  * A move to view the results of the ending game.
@@ -20,7 +21,7 @@ public class ViewGameResult extends BaseMove {
      */
     public ViewGameResult(final WriteableGame game) {
         super(game);
-        addCheck(CheckFactory.isCurrentState(State.RESULTS));
+        addCheck(new IsCurrentStateCheck(State.RESULTS));
     }
 
     @Override

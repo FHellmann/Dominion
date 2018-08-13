@@ -10,7 +10,10 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.
@@ -31,12 +34,12 @@ public class FeastAction extends BaseMove {
 	 */
 	public FeastAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
 		super(game, player, card);
-		addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
-		addCheck(CheckFactory.isCurrentPlayer());
+		addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
+		addCheck(new IsCurrentPlayerCheck());
 		addCheck(CheckFactory.isCardInSupply());
 		addCheck(CheckFactory.isCardAvailable());
 		addCheck(CheckFactory.isInCardPrice(Settings.FEAST_MAX_CARD_COST));
-		addCheck(CheckFactory.isResolveCard(KingdomCard.FEAST));
+		addCheck(new IsResolveCardCheck(KingdomCard.FEAST));
 	}
 
 	@Override

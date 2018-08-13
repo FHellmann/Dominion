@@ -1,14 +1,11 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.logic.moves;
+package edu.hm.cs.fh.dominion.logic.moves.check;
 
 import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
-import edu.hm.cs.fh.dominion.database.full.State;
-import edu.hm.cs.fh.dominion.database.full.WriteableGame;
-import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -24,28 +21,6 @@ public final class CheckFactory {
 	 * No one sould see me from outside!
 	 */
 	private CheckFactory() {
-	}
-
-	/**
-	 * Generates a check for equal state.
-	 *
-	 * @param state
-	 *            to check.
-	 *
-	 * @return a check object for reviewing.
-	 */
-	public static Check isCurrentState(final State state) {
-		return (game, player, card) -> new MoveResult(state == game.getState(), "The current phase is not "
-				+ state.toString().toLowerCase() + ".");
-	}
-
-	/**
-	 * Generates a check for equal player.
-	 *
-	 * @return a check object for reviewing.
-	 */
-	public static Check isCurrentPlayer() {
-		return (game, player, card) -> new MoveResult(game.getCurrentPlayer().equals(player), "It's not your turn.");
 	}
 
 	/**
@@ -238,19 +213,6 @@ public final class CheckFactory {
 	}
 
 	/**
-	 * Generates a check for proving if the players hand has lower or equal amount of cards then the
-	 * specified amount of cards.
-	 *
-	 * @param amount
-	 *            of cards.
-	 * @return a check object for reviewing.
-	 */
-	public static Check isHandcardSizeLowerOrEqual(final int amount) {
-		return (game, player, card) -> new MoveResult(player.getCardDeckHand().size() <= amount,
-				"The players hand card size isn't <= " + amount + ".");
-	}
-
-	/**
 	 * Generates a check for proving if the player has more then one treasury card.
 	 *
 	 * @return a check object for reviewing.
@@ -340,27 +302,5 @@ public final class CheckFactory {
 			return new MoveResult(lastPolledCard.isPresent() && card == lastPolledCard.get(),
 					"This card is not the last polled one.");
 		};
-	}
-
-	/**
-	 * A simple check.
-	 *
-	 * @author Fabio Hellmann, info@fabio-hellmann.de
-	 * @version 24.04.2014
-	 */
-	@FunctionalInterface
-	public interface Check {
-		/**
-		 * Checks something.
-		 *
-		 * @param game
-		 *            to modify.
-		 * @param player
-		 *            who want's to play the move.
-		 * @param card
-		 *            to play.
-		 * @return a {@link MoveResult} for more informations.
-		 */
-		MoveResult isCorrect(final WriteableGame game, final WriteablePlayer player, final Card card);
 	}
 }

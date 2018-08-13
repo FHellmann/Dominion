@@ -9,7 +9,9 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
 
 /**
  * The attack by the militia is over.
@@ -19,26 +21,24 @@ import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
  */
 public class MilitiaAttackOver extends BaseMove {
 
-	/**
-	 * Creates a new attack militia over move.
-	 *
-	 * @param game
-	 *            to reference.
-	 * @param player
-	 *            who want to act.
-	 */
-	public MilitiaAttackOver(final WriteableGame game, final WriteablePlayer player) {
-		super(game, player);
-		addCheck(CheckFactory.isCurrentState(State.ATTACK_YIELD));
-		addCheck(CheckFactory.isCurrentPlayer());
-		addCheck(CheckFactory.isNotAttacker());
-		addCheck(CheckFactory.isAttackCard(KingdomCard.MILITIA));
-		addCheck(CheckFactory.isHandcardSizeEqual(Settings.MILITIA_CARDS_TO_HOLD));
-	}
+    /**
+     * Creates a new attack militia over move.
+     *
+     * @param game   to reference.
+     * @param player who want to act.
+     */
+    public MilitiaAttackOver(final WriteableGame game, final WriteablePlayer player) {
+        super(game, player);
+        addCheck(new IsCurrentStateCheck(State.ATTACK_YIELD));
+        addCheck(new IsCurrentPlayerCheck());
+        addCheck(CheckFactory.isNotAttacker());
+        addCheck(CheckFactory.isAttackCard(KingdomCard.MILITIA));
+        addCheck(CheckFactory.isHandcardSizeEqual(Settings.MILITIA_CARDS_TO_HOLD));
+    }
 
-	@Override
-	public void onFire() {
-		getGame().setState(State.ATTACK);
-		getGame().nextPlayer();
-	}
+    @Override
+    public void onFire() {
+        getGame().setState(State.ATTACK);
+        getGame().nextPlayer();
+    }
 }

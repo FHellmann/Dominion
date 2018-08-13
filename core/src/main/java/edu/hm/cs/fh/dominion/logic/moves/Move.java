@@ -3,6 +3,8 @@
  */
 package edu.hm.cs.fh.dominion.logic.moves;
 
+import edu.hm.cs.fh.dominion.logic.moves.check.MoveResult;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

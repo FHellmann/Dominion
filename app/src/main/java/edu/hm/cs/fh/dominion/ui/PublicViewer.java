@@ -4,6 +4,7 @@
 package edu.hm.cs.fh.dominion.ui;
 
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
+import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
@@ -50,13 +51,10 @@ public class PublicViewer extends AbstractPlayer {
 				getGame().getPlayers().forEach(
 						player -> strBuilder.append("\t").append(player.getName()).append("\t")
 								.append(player.getVictoryPoints().getCount()).append("\n"));
-
 				inOut.sendOutput(strBuilder.toString());
 			} else if (object instanceof ShowCards) {
 				final ShowCards show = (ShowCards) object;
-				final StringBuilder strBuilder = new StringBuilder("\t+ Karten: ");
-				strBuilder.append(show.getCards().map(card -> card.getName()).collect(Collectors.joining(", ")));
-				inOut.sendOutput(strBuilder.toString());
+				inOut.sendOutput("\t+ Karten: " + show.getCards().map(Card::getName).collect(Collectors.joining(", ")));
 			}
 		}
 	}

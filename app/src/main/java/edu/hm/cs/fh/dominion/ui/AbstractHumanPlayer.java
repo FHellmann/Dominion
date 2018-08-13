@@ -3,19 +3,20 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Observable;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
+import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.logic.moves.ExitGame;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
 import edu.hm.cs.fh.dominion.logic.moves.card.ShowCards;
 import edu.hm.cs.fh.dominion.ui.io.ContentIO;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Observable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A human player has to play this content.
@@ -39,7 +40,7 @@ public abstract class AbstractHumanPlayer extends AbstractRegisteredPlayer {
 	 * @param inOut
 	 *            is an IO-Interface.
 	 */
-	public AbstractHumanPlayer(final ReadonlyGame game, final Logic logic, final String name, final ContentIO inOut) {
+	AbstractHumanPlayer(final ReadonlyGame game, final Logic logic, final String name, final ContentIO inOut) {
 		super(game, logic, name);
 		this.inOut = inOut;
 	}
@@ -66,17 +67,13 @@ public abstract class AbstractHumanPlayer extends AbstractRegisteredPlayer {
 		if (object instanceof ShowCards) {
 			final ShowCards show = (ShowCards) object;
 
-			final StringBuilder strBuilder = new StringBuilder(" ~ Show Cards: ");
-			strBuilder.append(show.getCards().map(card -> card.getName()).collect(Collectors.joining(", ")));
-
-			getIO().sendOutput(strBuilder.toString());
+			getIO().sendOutput(" ~ Show Cards: " + show.getCards().map(Card::getName).collect(Collectors.joining(", ")));
 		} else if (object instanceof ViewGameResult) {
 			final StringBuilder strBuilder = new StringBuilder();
 			strBuilder.append(" ~ Game Result:").append(NEW_LINE);
 			getGame().getPlayers().forEach(
 					player -> strBuilder.append("\t").append(player.getName()).append("\t")
 							.append(player.getVictoryPoints().getCount()).append(NEW_LINE));
-
 			getIO().sendOutput(strBuilder.toString());
 		} else if (object instanceof ExitGame) {
 			try {
@@ -95,7 +92,7 @@ public abstract class AbstractHumanPlayer extends AbstractRegisteredPlayer {
 	 *
 	 * @return the inOut.
 	 */
-	public ContentIO getIO() {
+	private ContentIO getIO() {
 		return inOut;
 	}
 }

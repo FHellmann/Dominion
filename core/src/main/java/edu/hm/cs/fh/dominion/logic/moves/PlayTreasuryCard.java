@@ -9,6 +9,9 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
 
 /**
  * A move to play a treasury card.
@@ -26,8 +29,8 @@ public class PlayTreasuryCard extends BaseMove {
      */
     public PlayTreasuryCard(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(CheckFactory.isCurrentState(State.PURCHASE));
-        addCheck(CheckFactory.isCurrentPlayer());
+        addCheck(new IsCurrentStateCheck(State.PURCHASE));
+        addCheck(new IsCurrentPlayerCheck());
         addCheck(CheckFactory.isCardType(TreasuryCard.class));
         addCheck(CheckFactory.isHandcard());
     }

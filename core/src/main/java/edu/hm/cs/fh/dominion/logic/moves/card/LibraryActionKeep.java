@@ -9,7 +9,10 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
 
 /**
  * A choice for the user to keep the last polled card in library action resolving.
@@ -18,24 +21,22 @@ import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
  * @version 12.06.2014
  */
 public class LibraryActionKeep extends BaseMove {
-	/**
-	 * Creates a new library action to keep the last polled card.
-	 *
-	 * @param game
-	 *            to reference.
-	 * @param player
-	 *            who want to act.
-	 */
-	public LibraryActionKeep(final WriteableGame game, final WriteablePlayer player) {
-		super(game, player);
-		addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
-		addCheck(CheckFactory.isCurrentPlayer());
-		addCheck(CheckFactory.isHandcardSizeLower(Settings.LIBRARY_CARDS_TO_HOLD));
-		addCheck(CheckFactory.isResolveCard(KingdomCard.LIBRARY));
-	}
+    /**
+     * Creates a new library action to keep the last polled card.
+     *
+     * @param game   to reference.
+     * @param player who want to act.
+     */
+    public LibraryActionKeep(final WriteableGame game, final WriteablePlayer player) {
+        super(game, player);
+        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new IsCurrentPlayerCheck());
+        addCheck(CheckFactory.isHandcardSizeLower(Settings.LIBRARY_CARDS_TO_HOLD));
+        addCheck(new IsResolveCardCheck(KingdomCard.LIBRARY));
+    }
 
-	@Override
-	public void onFire() {
-		getPlayer().get().pollCards(1, Settings.getRandom());
-	}
+    @Override
+    public void onFire() {
+        getPlayer().get().pollCards(1, Settings.getRandom());
+    }
 }

@@ -11,7 +11,10 @@ import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
 
 /**
  * A choice for the user to discard the last polled card and poll a new one in library action
@@ -33,13 +36,13 @@ public class LibraryActionDiscard extends BaseMove {
 	 */
 	public LibraryActionDiscard(final WriteableGame game, final WriteablePlayer player, final Card card) {
 		super(game, player, card);
-		addCheck(CheckFactory.isCurrentState(State.ACTION_RESOLVE));
-		addCheck(CheckFactory.isCurrentPlayer());
+		addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
+		addCheck(new IsCurrentPlayerCheck());
 		addCheck(CheckFactory.isHandcard());
 		addCheck(CheckFactory.isHandcardSizeLower(Settings.LIBRARY_CARDS_TO_HOLD));
 		addCheck(CheckFactory.isLastPolledCard());
 		addCheck(CheckFactory.isCardType(KingdomCard.class));
-		addCheck(CheckFactory.isResolveCard(KingdomCard.LIBRARY));
+		addCheck(new IsResolveCardCheck(KingdomCard.LIBRARY));
 	}
 
 	@Override

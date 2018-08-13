@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hm.cs.fh.dominion.logic.moves;
+package edu.hm.cs.fh.dominion.logic.moves.check;
 
 /**
  * Contains the result of a move.
@@ -23,7 +23,7 @@ public class MoveResult {
 	 * @param msg
 	 *            if the move is inpossible otherwise <code>null</code>.
 	 */
-	MoveResult(final boolean possible, final String msg) {
+	public MoveResult(final boolean possible, final String msg) {
 		this.possible = possible;
 		this.msg = possible ? "" : msg;
 	}
