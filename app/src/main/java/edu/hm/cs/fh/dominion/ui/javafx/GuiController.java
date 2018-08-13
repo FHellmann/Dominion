@@ -7,10 +7,11 @@ import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
 import edu.hm.cs.fh.dominion.logic.moves.CleanupTurn;
+import edu.hm.cs.fh.dominion.logic.moves.ExitGame;
 import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.ViewGameResult;
 import edu.hm.cs.fh.dominion.logic.moves.card.ShowCards;
-import edu.hm.cs.fh.dominion.ui.JavaFxPlayer;
+import edu.hm.cs.fh.dominion.ui.UserInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -130,19 +131,9 @@ public class GuiController implements Initializable, Observer {
     private Pane handCardPane;
     @FXML
     private ImageView cardDeckStacker;
+    private UserInterface fxPlayer;
     //@FXML
     //private ListView moveSelectionMenu;
-
-    /**
-     * Get the player or an empty optional.
-     *
-     * @param players to get the player from.
-     * @param index   of the player.
-     * @return an optional player.
-     */
-    private static Optional<ReadonlyPlayer> getPlayerAtIndex(final List<ReadonlyPlayer> players, final int index) {
-        return players.stream().skip(index).findFirst();
-    }
 
     /**
      * Set the name of a player and coloring the background in red if the player is the current
@@ -205,27 +196,16 @@ public class GuiController implements Initializable, Observer {
             // Clean for the next player
             playedCardPane.getChildren().clear();
         } else if (move instanceof ViewGameResult) {
-            getGame().getPlayers()
-                    .filter(player -> player instanceof JavaFxPlayer)
-                    .findFirst()
-                    .ifPresent(player -> updateResultPane(game, player));
+            getGame().getPlayers().forEach(player -> updateResultPane(game, player));
             resultPane.setVisible(true);
         } else if (move instanceof ShowCards) {
             final ShowCards showCards = (ShowCards) move;
             updateDisplayedCards(showCardPane, showCards.getCards().collect(Collectors.toList()),
                     CARD_SIZE_PLAYER_ME / 2.0, true);
-            //} else if (move instanceof ExitGame) {
-            // TODO Show result
+        } else if (move instanceof ExitGame) {
+            System.exit(0);
         }
-
-        System.out.println(game.getPlayers().map(ReadonlyPlayer::getClass).map(Class::getSimpleName).collect(Collectors.joining(", ")));
-        getGame().getPlayers()
-                .filter(player -> {
-                    System.out.println(player.getName() + ": Class="+player.getClass() + ", FX="+(player instanceof JavaFxPlayer));
-                    return player instanceof JavaFxPlayer;
-                })
-                .findFirst()
-                .ifPresent(player -> updateContentData(game, player));
+        updateContentData(game);
     }
 
     /**
@@ -239,18 +219,17 @@ public class GuiController implements Initializable, Observer {
         game.getPlayers().filter(player -> !player.equals(javaFxPlayer)).findFirst()
                 .ifPresent(player -> setPlayerResult(labelResultPlayer2, labelResultPlayer2Points, player));
         game.getPlayers().filter(player -> !player.equals(javaFxPlayer)).skip(1).findFirst()
-                .ifPresent(player -> setPlayerResult(labelResultPlayer2, labelResultPlayer2Points, player));
+                .ifPresent(player -> setPlayerResult(labelResultPlayer3, labelResultPlayer3Points, player));
         game.getPlayers().filter(player -> !player.equals(javaFxPlayer)).skip(2).findFirst()
-                .ifPresent(player -> setPlayerResult(labelResultPlayer2, labelResultPlayer2Points, player));
+                .ifPresent(player -> setPlayerResult(labelResultPlayer4, labelResultPlayer4Points, player));
     }
 
     /**
      * Update all the labels, panes, etc.
      *
      * @param game         with all the data.
-     * @param javaFxPlayer who playes the gui.
      */
-    private void updateContentData(final ReadonlyGame game, final ReadonlyPlayer javaFxPlayer) {
+    private void updateContentData(final ReadonlyGame game) {
         final ReadonlyPlayer currPlayer = game.getCurrentPlayer();
 
         actions.setText(Integer.toString(currPlayer.getActions().getCount()));
@@ -264,21 +243,28 @@ public class GuiController implements Initializable, Observer {
         }
 
         // Players
-        final List<ReadonlyPlayer> players = game.getPlayers().filter(player -> !player.equals(javaFxPlayer))
+        final List<ReadonlyPlayer> players = getGame().getPlayers()
+                .filter(player -> player != fxPlayer.getPlayer().orElseThrow(IllegalStateException::new))
                 .collect(Collectors.toList());
-        final Optional<ReadonlyPlayer> player2 = players.stream().findFirst();
+        final Optional<ReadonlyPlayer> player1 = fxPlayer.getPlayer();
+        final Optional<ReadonlyPlayer> player2 = players.stream().skip(0).findFirst();
         final Optional<ReadonlyPlayer> player3 = players.stream().skip(1).findFirst();
         final Optional<ReadonlyPlayer> player4 = players.stream().skip(2).findFirst();
 
         // JavaFX Player
-        setPlayerData(labelPlayerGui, game, javaFxPlayer);
-        updateStacker(cardDeckStacker, javaFxPlayer);
-        updateDisplayedCards(
-                handCardPane,
-                javaFxPlayer.getCardDeckHand().stream().collect(Collectors.toList()),
-                CARD_SIZE_PLAYER_ME,
-                true
-        );
+        if(player1.isPresent()) {
+            setPlayerData(labelPlayerGui, game, player1.get());
+            updateStacker(cardDeckStacker, player1.get());
+            updateDisplayedCards(
+                    handCardPane,
+                    player1.get().getCardDeckHand().stream().collect(Collectors.toList()),
+                    CARD_SIZE_PLAYER_ME,
+                    true
+            );
+        } else {
+            labelPlayerGui.setVisible(false);
+            cardDeckStacker.setVisible(false);
+        }
 
         // Player 1
         if (player2.isPresent()) {
@@ -460,7 +446,7 @@ public class GuiController implements Initializable, Observer {
         if (firstStackerCard.isPresent()) {
             view.setImage(imageLoader.getCardImage(firstStackerCard.get(), view.getFitWidth()));
         } else {
-            view.setImage(imageLoader.getImage("cardback.jpg", view.getFitWidth()));
+            view.setImage(imageLoader.getCardBack(view.getFitWidth()));
         }
     }
 
@@ -491,7 +477,7 @@ public class GuiController implements Initializable, Observer {
                     if (showCards) {
                         image = imageLoader.getCardImage(card, cardWidth);
                     } else {
-                        image = imageLoader.getImage("cardback.jpg", cardWidth);
+                        image = imageLoader.getCardBack(cardWidth);
                     }
                     final ImageView imageView = new ImageView(image);
                     imageView.setPreserveRatio(true);
@@ -519,5 +505,9 @@ public class GuiController implements Initializable, Observer {
 
     public void setGame(ReadonlyGame game) {
         this.game = game;
+    }
+
+    public void setFxPlayer(UserInterface fxPlayer) {
+        this.fxPlayer = fxPlayer;
     }
 }

@@ -6,10 +6,7 @@ import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.full.Game;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.logic.Logic;
-import edu.hm.cs.fh.dominion.ui.Player;
-import edu.hm.cs.fh.dominion.ui.PublicViewer;
-import edu.hm.cs.fh.dominion.ui.Recorder;
-import edu.hm.cs.fh.dominion.ui.UserInterface;
+import edu.hm.cs.fh.dominion.ui.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -97,6 +94,10 @@ public class JavaFxApp extends Application {
         // get the controller from fxml
         final GuiController controller = myLoader.getController();
         controller.setGame(game);
+        controller.setFxPlayer(uis.stream()
+                .filter(player -> player instanceof JavaFxPlayer)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new));
         game.addObserver(controller);
 
         // Add mainContainer to layout

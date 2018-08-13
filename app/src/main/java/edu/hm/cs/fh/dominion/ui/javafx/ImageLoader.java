@@ -51,9 +51,25 @@ class ImageLoader {
         return getImage(card.getName(), prefWidth);
     }
 
-    Image getImage(final String imageName, final double prefWidth) {
+    /**
+     * Get the image of the back of a card.
+     *
+     * @param prefWidth of the image.
+     * @return the loaded image.
+     */
+    Image getCardBack(final double prefWidth) {
+        return getImage("cardback", prefWidth);
+    }
+
+    private Image getImage(final String imageName, final double prefWidth) {
         if (!cache.containsKey(imageName) || cache.get(imageName).getWidth() != prefWidth) {
-            cache.put(imageName, new Image(imageMap.get(imageName), prefWidth, 0, true, true));
+            final String imagePath;
+            if (imageMap.containsKey(imageName)) {
+                imagePath = imageMap.get(imageName);
+            } else {
+                imagePath = findImage(imageName);
+            }
+            cache.put(imageName, new Image(imagePath, prefWidth, 0, true, true));
         }
         return cache.get(imageName);
     }
