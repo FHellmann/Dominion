@@ -3,11 +3,11 @@
  */
 package edu.hm.cs.fh.dominion.database.full;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.database.cards.Card;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * A layer to read and write the game.

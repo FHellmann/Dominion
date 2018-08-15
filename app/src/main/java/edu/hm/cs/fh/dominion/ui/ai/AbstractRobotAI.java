@@ -3,12 +3,6 @@
  */
 package edu.hm.cs.fh.dominion.ui.ai;
 
-import java.util.List;
-import java.util.Observable;
-import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.database.cards.TreasuryCard;
 import edu.hm.cs.fh.dominion.database.cards.VictoryCard;
@@ -18,6 +12,12 @@ import edu.hm.cs.fh.dominion.logic.moves.Move;
 import edu.hm.cs.fh.dominion.logic.moves.PlayAllTreasuryCards;
 import edu.hm.cs.fh.dominion.logic.moves.PlayTreasuryCard;
 import edu.hm.cs.fh.dominion.ui.AbstractRegisteredPlayer;
+
+import java.util.List;
+import java.util.Observable;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * A robot player which act randomly.

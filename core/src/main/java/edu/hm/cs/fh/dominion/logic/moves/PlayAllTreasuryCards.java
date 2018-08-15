@@ -9,8 +9,8 @@ import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +30,8 @@ public class PlayAllTreasuryCards extends BaseMove {
      */
     public PlayAllTreasuryCards(final WriteableGame game, final WriteablePlayer player) {
         super(game, player);
-        addCheck(new IsCurrentStateCheck(State.PURCHASE));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.PURCHASE));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.hasMoreMoneyCards());
     }
 
@@ -39,11 +39,10 @@ public class PlayAllTreasuryCards extends BaseMove {
     public void onFire() {
         // filter all money cards from the players hand
         final WriteablePlayer player = getPlayer().orElseThrow(() -> new IllegalStateException("No player found"));
-        final List<TreasuryCard> cards = getPlayer().get().getCardDeckHand().stream()
+        final List<TreasuryCard> cards = player.getCardDeckHand().stream()
                 .filter(card -> card instanceof TreasuryCard)
                 .map(card -> (TreasuryCard) card)
                 .collect(Collectors.toList());
-
         cards.stream()
                 .peek(card -> WriteableCardDeck.move(player.getCardDeckHand(), player.getCardDeckPlayed(), card))
                 .map(card -> card.getMetaData().getCoints())

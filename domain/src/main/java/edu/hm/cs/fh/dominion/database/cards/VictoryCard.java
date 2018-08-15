@@ -34,7 +34,7 @@ public enum VictoryCard implements Card<VictoryMetaData> {
 
     private final VictoryMetaData treasuryMetaData;
 
-    VictoryCard(final int points, final int cost, final Type... types) {
+    VictoryCard(final int cost, final int points, final Type... types) {
         final List<Type> typeList = new ArrayList<>();
         typeList.add(Type.VICTORY);
         typeList.addAll(Arrays.asList(types));

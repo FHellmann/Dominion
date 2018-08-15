@@ -11,9 +11,9 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.ResolveCardCheck;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.
@@ -31,17 +31,19 @@ public class WorkshopAction extends BaseMove {
      */
     public WorkshopAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.isCardInSupply());
         addCheck(CheckFactory.isCardAvailable());
         addCheck(CheckFactory.isInCardPrice(Settings.WORKSHOP_MAX_CARD_COST));
-        addCheck(new IsResolveCardCheck(KingdomCard.WORKSHOP));
+        addCheck(new ResolveCardCheck(KingdomCard.WORKSHOP));
     }
 
     @Override
     public void onFire() {
-        getGame().getCardFromSupply(getCard().get(), getPlayer().get().getCardDeckStacker());
+        final Card card = getCard().orElseThrow(IllegalStateException::new);
+        final WriteablePlayer player = getPlayer().orElseThrow(IllegalStateException::new);
+        getGame().getCardFromSupply(card, player.getCardDeckStacker());
         getGame().setState(State.ACTION);
         getGame().popToResolveActionCard();
     }

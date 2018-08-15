@@ -7,8 +7,8 @@ import edu.hm.cs.fh.dominion.database.Settings;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 /**
  * A move to clean up players turn and check if game is over or not.
@@ -25,8 +25,8 @@ public class CleanupTurn extends BaseMove {
      */
     public CleanupTurn(final WriteableGame game, final WriteablePlayer player) {
         super(game, player, null);
-        addCheck(new IsCurrentStateCheck(State.CLEANUP));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.CLEANUP));
+        addCheck(new CurrentPlayerCheck());
     }
 
     @Override

@@ -34,8 +34,7 @@ public class JavaFxApp extends Application {
                                                      final Logic logic) {
         final List<UserInterface> uis = new ArrayList<>();
         // Intialize players
-        @SuppressWarnings("unchecked")
-        final List<UserInterface> players = argsParser
+        @SuppressWarnings("unchecked") final List<UserInterface> players = argsParser
                 .getPlayers()
                 .map(entry -> {
                     final String playerByName = Player.findPlayerClassByName(entry.getValue())

@@ -8,9 +8,9 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.ResolveCardCheck;
 
 public class ChapelAction extends BaseMove {
     private static int handCardSize;
@@ -27,9 +27,9 @@ public class ChapelAction extends BaseMove {
         if (handCardSize == 0) {
             handCardSize = player.getCardDeckHand().size();
         }
-        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
-        addCheck(new IsCurrentPlayerCheck());
-        addCheck(new IsResolveCardCheck(KingdomCard.CHAPEL));
+        addCheck(new CurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new CurrentPlayerCheck());
+        addCheck(new ResolveCardCheck(KingdomCard.CHAPEL));
         addCheck(CheckFactory.isHandcardSizeBiggerOrEqual(handCardSize - Settings.CHAPEL_REMOVE_CARDS));
     }
 

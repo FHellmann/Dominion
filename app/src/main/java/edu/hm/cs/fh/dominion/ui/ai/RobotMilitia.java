@@ -20,28 +20,25 @@ import java.util.Optional;
  * @version 21.04.2014
  */
 public class RobotMilitia extends AbstractRobotAI {
-	/**
-	 * Creates a new militia.
-	 *
-	 * @param game
-	 *            of datastoreage.
-	 * @param logic
-	 *            for every logical check.
-	 * @param name
-	 *            of the robot.
-	 */
-	public RobotMilitia(final ReadonlyGame game, final Logic logic, final String name) {
-		super(game, logic, name);
-	}
+    /**
+     * Creates a new militia.
+     *
+     * @param game  of datastoreage.
+     * @param logic for every logical check.
+     * @param name  of the robot.
+     */
+    public RobotMilitia(final ReadonlyGame game, final Logic logic, final String name) {
+        super(game, logic, name);
+    }
 
-	@Override
-	protected Optional<Move> onPreferedBuyCard(final List<Move> buyMoves) {
-		return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.MILITIA)
-				.findFirst();
-	}
+    @Override
+    protected Optional<Move> onPreferedBuyCard(final List<Move> buyMoves) {
+        return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.MILITIA)
+                .findFirst();
+    }
 
-	@Override
-	protected Optional<Move> onPreferedMove(final List<Move> allMoves) {
-		return allMoves.parallelStream().filter(move -> move instanceof MilitiaAttack).findFirst();
-	}
+    @Override
+    protected Optional<Move> onPreferedMove(final List<Move> allMoves) {
+        return allMoves.parallelStream().filter(move -> move instanceof MilitiaAttack).findFirst();
+    }
 }

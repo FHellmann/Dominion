@@ -10,8 +10,8 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 import java.util.stream.Stream;
 
@@ -31,8 +31,8 @@ public class MoatAttackDefend extends BaseMove implements ShowCards {
      */
     public MoatAttackDefend(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.ATTACK));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ATTACK));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.isNotAttacker());
         addCheck(CheckFactory.isHandcard());
         addCheck(CheckFactory.isAttackCard(KingdomCard.WITCH, KingdomCard.MILITIA));

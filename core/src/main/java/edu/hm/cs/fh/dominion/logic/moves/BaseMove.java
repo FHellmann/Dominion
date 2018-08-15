@@ -113,13 +113,7 @@ public abstract class BaseMove implements Move {
         // Filer every impossible checks and get the first
         return checks.stream()
                 .map(check -> check.isCorrect(game, player, card))
-                .filter(result -> {
-                    if (!result.isPossible()) {
-                        System.out.println(result.getMsg());
-                        return false;
-                    }
-                    return true;
-                })
+                .filter(result -> !result.isPossible())
                 .findFirst()
                 .orElseGet(() -> new MoveResult(true, ""));
     }

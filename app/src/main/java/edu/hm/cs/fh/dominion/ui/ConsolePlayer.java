@@ -14,17 +14,14 @@ import edu.hm.cs.fh.dominion.ui.io.ConsoleIO;
  * @version 21.04.2014
  */
 public class ConsolePlayer extends AbstractHumanPlayer {
-	/**
-	 * Creates a new console-player.
-	 *
-	 * @param game
-	 *            of datastoreage.
-	 * @param logic
-	 *            for every logical check.
-	 * @param name
-	 *            of the player.
-	 */
-	public ConsolePlayer(final ReadonlyGame game, final Logic logic, final String name) {
-		super(game, logic, name, new ConsoleIO());
-	}
+    /**
+     * Creates a new console-player.
+     *
+     * @param game  of datastoreage.
+     * @param logic for every logical check.
+     * @param name  of the player.
+     */
+    public ConsolePlayer(final ReadonlyGame game, final Logic logic, final String name) {
+        super(game, logic, name, new ConsoleIO());
+    }
 }

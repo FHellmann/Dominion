@@ -8,9 +8,9 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.ResolveCardCheck;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.
@@ -27,9 +27,9 @@ public class ChancellorActionQuit extends BaseMove {
      */
     public ChancellorActionQuit(final WriteableGame game, final WriteablePlayer player) {
         super(game, player);
-        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
-        addCheck(new IsResolveCardCheck(KingdomCard.CHANCELLOR));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new ResolveCardCheck(KingdomCard.CHANCELLOR));
+        addCheck(new CurrentPlayerCheck());
     }
 
     @Override

@@ -10,9 +10,7 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.*;
 
 /**
  * A move to play a action card.
@@ -30,12 +28,12 @@ public class PlayActionCard extends BaseMove {
      */
     public PlayActionCard(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.ACTION));
-        addCheck(new IsCurrentPlayerCheck());
-        addCheck(CheckFactory.isCardType(KingdomCard.class));
-        addCheck(CheckFactory.hasActionLeft());
+        addCheck(new CurrentStateCheck(State.ACTION));
+        addCheck(new CurrentPlayerCheck());
+        addCheck(new CardTypeCheck(KingdomCard.class));
+        addCheck(new ActionLeftCheck());
         addCheck(CheckFactory.isHandcard());
-        addCheck(CheckFactory.hasType(Card.Type.ACTION));
+        addCheck(new HasTypeCheck(Card.Type.ACTION));
     }
 
     @Override

@@ -15,28 +15,33 @@ import java.util.stream.Collectors;
  * @version 12.04.2014
  */
 public interface Move {
-	/**
-	 * Tests if the move is possible or not.
-	 *
-	 * @return <code>true</code> if the move is possible to execute.
-	 */
-	MoveResult test();
+    /**
+     * Tests if the move is possible or not.
+     *
+     * @return <code>true</code> if the move is possible to execute.
+     */
+    MoveResult test();
 
-	/**
-	 * The move is going to be executed.
-	 *
-	 * @return the result.
-	 */
-	void fire();
+    /**
+     * The move is going to be executed.
+     *
+     * @return the result.
+     */
+    void fire();
 
-	/**
-	 * Filters from all moves of the list the possible ones.
-	 *
-	 * @param moves
-	 *            to filter.
-	 * @return a list with all possible moves.
-	 */
-	static List<Move> filterPossibleMoves(final List<Move> moves) {
-		return moves.parallelStream().filter(move -> move.test().isPossible()).collect(Collectors.toList());
-	}
+    /**
+     * Filters from all moves of the list the possible ones.
+     *
+     * @param moves to filter.
+     * @return a list with all possible moves.
+     */
+    static List<Move> filterPossibleMoves(final List<Move> moves) {
+        return moves.parallelStream().filter(move -> {
+            try {
+                return move.test().isPossible();
+            } catch (Exception e) {
+                return false;
+            }
+        }).collect(Collectors.toList());
+    }
 }

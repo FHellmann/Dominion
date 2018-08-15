@@ -12,12 +12,11 @@ import java.util.Optional;
  * @version 11.04.2014
  */
 public interface I18N {
-	/**
-	 * Localize the text of the key.
-	 *
-	 * @param key
-	 *            of the text.
-	 * @return the localized text.
-	 */
-	Optional<String> getTranslation(String key);
+    /**
+     * Localize the text of the key.
+     *
+     * @param key of the text.
+     * @return the localized text.
+     */
+    Optional<String> getTranslation(String key);
 }

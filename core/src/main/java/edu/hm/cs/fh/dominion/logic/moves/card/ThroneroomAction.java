@@ -10,10 +10,7 @@ import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
-import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.*;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.
@@ -31,11 +28,11 @@ public class ThroneroomAction extends BaseMove {
      */
     public ThroneroomAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.isHandcard());
-        addCheck(CheckFactory.isCardType(KingdomCard.class));
-        addCheck(new IsResolveCardCheck(KingdomCard.THRONEROOM));
+        addCheck(new CardTypeCheck(KingdomCard.class));
+        addCheck(new ResolveCardCheck(KingdomCard.THRONEROOM));
     }
 
     @Override

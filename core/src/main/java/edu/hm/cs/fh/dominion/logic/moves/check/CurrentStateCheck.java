@@ -5,10 +5,10 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
-public class IsCurrentStateCheck implements Check {
+public class CurrentStateCheck implements Check {
     private final State state;
 
-    public IsCurrentStateCheck(final State state) {
+    public CurrentStateCheck(final State state) {
         this.state = state;
     }
 

@@ -10,8 +10,8 @@ package edu.hm.cs.fh.dominion.database.full;
  * @version 29.03.2014
  */
 public interface Changeable {
-	/**
-	 * Notify the changeable that something changed.
-	 */
-	void setChanged();
+    /**
+     * Notify the changeable that something changed.
+     */
+    void setChanged();
 }

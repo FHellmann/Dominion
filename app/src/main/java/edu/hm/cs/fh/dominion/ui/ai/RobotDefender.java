@@ -20,28 +20,25 @@ import java.util.Optional;
  * @version 21.04.2014
  */
 public class RobotDefender extends AbstractRobotAI {
-	/**
-	 * Creates a new defender.
-	 *
-	 * @param game
-	 *            of datastoreage.
-	 * @param logic
-	 *            for every logical check.
-	 * @param name
-	 *            of the robot.
-	 */
-	public RobotDefender(final ReadonlyGame game, final Logic logic, final String name) {
-		super(game, logic, name);
-	}
+    /**
+     * Creates a new defender.
+     *
+     * @param game  of datastoreage.
+     * @param logic for every logical check.
+     * @param name  of the robot.
+     */
+    public RobotDefender(final ReadonlyGame game, final Logic logic, final String name) {
+        super(game, logic, name);
+    }
 
-	@Override
-	protected Optional<Move> onPreferedBuyCard(final List<Move> buyMoves) {
-		return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.MOAT)
-				.findFirst();
-	}
+    @Override
+    protected Optional<Move> onPreferedBuyCard(final List<Move> buyMoves) {
+        return buyMoves.parallelStream().filter(move -> ((BuyCard) move).getCard().get() == KingdomCard.MOAT)
+                .findFirst();
+    }
 
-	@Override
-	protected Optional<Move> onPreferedMove(final List<Move> allMoves) {
-		return allMoves.parallelStream().filter(move -> move instanceof MoatAttackDefend).findFirst();
-	}
+    @Override
+    protected Optional<Move> onPreferedMove(final List<Move> allMoves) {
+        return allMoves.parallelStream().filter(move -> move instanceof MoatAttackDefend).findFirst();
+    }
 }

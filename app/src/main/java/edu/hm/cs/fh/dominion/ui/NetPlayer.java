@@ -3,11 +3,11 @@
  */
 package edu.hm.cs.fh.dominion.ui;
 
-import java.io.IOException;
-
 import edu.hm.cs.fh.dominion.database.ReadonlyGame;
 import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.ui.io.NetIO;
+
+import java.io.IOException;
 
 /**
  * A net player is played by a person across the network.

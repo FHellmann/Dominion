@@ -10,8 +10,8 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 /**
  * The attack by the witch.
@@ -28,8 +28,8 @@ public class WitchAttack extends BaseMove {
      */
     public WitchAttack(final WriteableGame game, final WriteablePlayer player) {
         super(game, player);
-        addCheck(new IsCurrentStateCheck(State.ATTACK_YIELD));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ATTACK_YIELD));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.isNotAttacker());
         addCheck(CheckFactory.isAttackCard(KingdomCard.WITCH));
     }

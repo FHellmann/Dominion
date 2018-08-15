@@ -3,21 +3,17 @@
  */
 package edu.hm.cs.fh.dominion;
 
+import edu.hm.cs.fh.dominion.ui.ConsolePlayer;
+import edu.hm.cs.fh.dominion.ui.JavaFxPlayer;
+import edu.hm.cs.fh.dominion.ui.NetPlayer;
+import edu.hm.cs.fh.dominion.ui.ai.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import edu.hm.cs.fh.dominion.ui.ConsolePlayer;
-import edu.hm.cs.fh.dominion.ui.JavaFxPlayer;
-import edu.hm.cs.fh.dominion.ui.NetPlayer;
-import edu.hm.cs.fh.dominion.ui.ai.Robot1;
-import edu.hm.cs.fh.dominion.ui.ai.RobotDefender;
-import edu.hm.cs.fh.dominion.ui.ai.RobotMilitia;
-import edu.hm.cs.fh.dominion.ui.ai.RobotSorcerer;
-import edu.hm.cs.fh.dominion.ui.ai.RobotX;
 
 /**
  * A tool to parse the arguments given from the main.

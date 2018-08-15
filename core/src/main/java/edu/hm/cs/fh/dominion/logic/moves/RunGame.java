@@ -10,7 +10,7 @@ import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableCardDeck;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 import java.util.stream.Stream;
 
@@ -28,7 +28,7 @@ public class RunGame extends BaseMove {
      */
     public RunGame(final WriteableGame game) {
         super(game);
-        addCheck(new IsCurrentStateCheck(State.SETUP));
+        addCheck(new CurrentStateCheck(State.SETUP));
         addCheck(CheckFactory.isSupplyFull());
     }
 

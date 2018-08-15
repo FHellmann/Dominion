@@ -4,10 +4,10 @@ import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
-public class IsCardTypeCheck implements Check {
+public class CardTypeCheck implements Check {
     private final Class<? extends Card> cardClass;
 
-    public IsCardTypeCheck(final Class<? extends Card> cardClass) {
+    public CardTypeCheck(final Class<? extends Card> cardClass) {
         this.cardClass = cardClass;
     }
 

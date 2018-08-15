@@ -13,36 +13,34 @@ import edu.hm.cs.fh.dominion.database.ReadonlyCounter;
  */
 public interface WriteableCounter extends ReadonlyCounter {
 
-	/**
-	 * Reduce the counter by one.
-	 *
-	 * @return the current counter after the reduction.
-	 */
-	int decrement();
+    /**
+     * Reduce the counter by one.
+     *
+     * @return the current counter after the reduction.
+     */
+    int decrement();
 
-	/**
-	 * Increment the counter by one.
-	 *
-	 * @return the current counter after the incrementation.
-	 */
-	int increment();
+    /**
+     * Increment the counter by one.
+     *
+     * @return the current counter after the incrementation.
+     */
+    int increment();
 
-	/**
-	 * Add a number (could also be a negative number).
-	 *
-	 * @param number
-	 *            to add.
-	 * @return the current counter after the incrementation.
-	 */
-	int add(int number);
+    /**
+     * Add a number (could also be a negative number).
+     *
+     * @param number to add.
+     * @return the current counter after the incrementation.
+     */
+    int add(int number);
 
-	/**
-	 * Set a number.
-	 *
-	 * @param number
-	 *            to set.
-	 * @return the current counter value.
-	 */
-	int set(int number);
+    /**
+     * Set a number.
+     *
+     * @param number to set.
+     * @return the current counter value.
+     */
+    int set(int number);
 
 }

@@ -12,18 +12,18 @@ package edu.hm.cs.fh.dominion.database;
  */
 public interface ReadonlyCounter {
 
-	/**
-	 * The current counter value.
-	 *
-	 * @return the count.
-	 */
-	int getCount();
+    /**
+     * The current counter value.
+     *
+     * @return the count.
+     */
+    int getCount();
 
-	/**
-	 * The lower limit the counter will not undercut.
-	 *
-	 * @return the lower limit.
-	 */
-	int getLowerLimit();
+    /**
+     * The lower limit the counter will not undercut.
+     *
+     * @return the lower limit.
+     */
+    int getLowerLimit();
 
 }

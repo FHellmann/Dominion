@@ -9,8 +9,9 @@ import edu.hm.cs.fh.dominion.database.cards.KingdomCard;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
+import edu.hm.cs.fh.dominion.logic.moves.check.CardTypeCheck;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
 
 /**
  * A move to select a kingdom card.
@@ -28,10 +29,10 @@ public class SelectKingdomCard extends BaseMove {
      */
     public SelectKingdomCard(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.SETUP));
+        addCheck(new CurrentStateCheck(State.SETUP));
         addCheck(CheckFactory.isCardNotInSupply());
         addCheck(CheckFactory.isSupplyNotFull());
-        addCheck(CheckFactory.isCardType(KingdomCard.class));
+        addCheck(new CardTypeCheck(KingdomCard.class));
     }
 
     @Override

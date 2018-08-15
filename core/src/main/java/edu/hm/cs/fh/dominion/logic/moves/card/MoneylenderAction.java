@@ -12,9 +12,9 @@ import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 import edu.hm.cs.fh.dominion.logic.moves.BaseMove;
 import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentPlayerCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsResolveCardCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentPlayerCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.ResolveCardCheck;
 
 /**
  * A defend of an attack with the {@link KingdomCard#MOAT}.
@@ -32,10 +32,10 @@ public class MoneylenderAction extends BaseMove {
      */
     public MoneylenderAction(final WriteableGame game, final WriteablePlayer player, final Card card) {
         super(game, player, card);
-        addCheck(new IsCurrentStateCheck(State.ACTION_RESOLVE));
-        addCheck(new IsCurrentPlayerCheck());
+        addCheck(new CurrentStateCheck(State.ACTION_RESOLVE));
+        addCheck(new CurrentPlayerCheck());
         addCheck(CheckFactory.isHandcard());
-        addCheck(new IsResolveCardCheck(KingdomCard.MONEYLENDER));
+        addCheck(new ResolveCardCheck(KingdomCard.MONEYLENDER));
         addCheck(CheckFactory.isEqualCard(TreasuryCard.COPPER));
     }
 

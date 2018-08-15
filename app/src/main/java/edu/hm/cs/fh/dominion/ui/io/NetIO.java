@@ -39,7 +39,7 @@ public class NetIO implements ContentIO {
     public NetIO() throws IOException {
         // init Server if necessary
         final Optional<String> serverHost = NetServer.isAvailable();
-        if(serverHost.isPresent()) {
+        if (serverHost.isPresent()) {
             server = Optional.empty();
         } else {
             final NetServer server = new NetServer();
@@ -82,7 +82,7 @@ public class NetIO implements ContentIO {
 
         public void start() {
             services.execute(() -> {
-                while(!services.isShutdown()) {
+                while (!services.isShutdown()) {
                     try {
                         final Socket socket = serverSocket.accept();
                         services.execute(new NetClient(socket));
@@ -105,7 +105,7 @@ public class NetIO implements ContentIO {
                     final Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
                     while (inetAddresses.hasMoreElements()) {
                         final InetAddress inetAddress = inetAddresses.nextElement();
-                        if(inetAddress.isLoopbackAddress() || inetAddress.isAnyLocalAddress()) {
+                        if (inetAddress.isLoopbackAddress() || inetAddress.isAnyLocalAddress()) {
                             continue;
                         }
                         final String hostAddress = inetAddress.getHostAddress();

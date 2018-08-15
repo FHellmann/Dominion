@@ -6,8 +6,8 @@ package edu.hm.cs.fh.dominion.logic.moves;
 import edu.hm.cs.fh.dominion.database.full.State;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
-import edu.hm.cs.fh.dominion.logic.moves.check.CheckFactory;
-import edu.hm.cs.fh.dominion.logic.moves.check.IsCurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.CurrentStateCheck;
+import edu.hm.cs.fh.dominion.logic.moves.check.InPlayerRangeCheck;
 
 /**
  * A move to open the game.
@@ -23,8 +23,8 @@ public class OpenGame extends BaseMove {
      */
     public OpenGame(final WriteableGame game) {
         super(game);
-        addCheck(new IsCurrentStateCheck(State.INITIALIZE));
-        addCheck(CheckFactory.isInPlayerRange());
+        addCheck(new CurrentStateCheck(State.INITIALIZE));
+        addCheck(new InPlayerRangeCheck());
     }
 
     @Override

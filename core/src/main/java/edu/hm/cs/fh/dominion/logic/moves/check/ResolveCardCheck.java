@@ -4,10 +4,10 @@ import edu.hm.cs.fh.dominion.database.cards.Card;
 import edu.hm.cs.fh.dominion.database.full.WriteableGame;
 import edu.hm.cs.fh.dominion.database.full.WriteablePlayer;
 
-public class IsResolveCardCheck implements Check {
+public class ResolveCardCheck implements Check {
     private final Card lastPlayed;
 
-    public IsResolveCardCheck(final Card lastPlayed) {
+    public ResolveCardCheck(final Card lastPlayed) {
         this.lastPlayed = lastPlayed;
     }
 

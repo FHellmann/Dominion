@@ -75,6 +75,8 @@ public class Logic {
         allMoves.add(new ChancellorActionQuit(game, rwPlayer));
         Stream.of(TreasuryCard.values()).forEach(card -> allMoves.add(new MoneylenderAction(game, rwPlayer, card)));
         Stream.of(KingdomCard.values()).forEach(card -> allMoves.add(new LibraryActionDiscard(game, rwPlayer, card)));
+        Stream.of(KingdomCard.values()).forEach(card -> allMoves.add(new ThroneroomAction(game, rwPlayer, card)));
+        Stream.of(KingdomCard.values()).forEach(card -> allMoves.add(new ThroneroomActionResolve(game, rwPlayer, card)));
         Stream.of(TreasuryCard.values()).forEach(card -> allMoves.add(new LibraryActionDiscard(game, rwPlayer, card)));
         Stream.of(VictoryCard.values()).forEach(card -> allMoves.add(new LibraryActionDiscard(game, rwPlayer, card)));
         allMoves.add(new LibraryActionKeep(game, rwPlayer));

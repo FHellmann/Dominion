@@ -227,7 +227,7 @@ public class GuiController implements Initializable, Observer {
     /**
      * Update all the labels, panes, etc.
      *
-     * @param game         with all the data.
+     * @param game with all the data.
      */
     private void updateContentData(final ReadonlyGame game) {
         final ReadonlyPlayer currPlayer = game.getCurrentPlayer();
@@ -252,7 +252,7 @@ public class GuiController implements Initializable, Observer {
         final Optional<ReadonlyPlayer> player4 = players.stream().skip(2).findFirst();
 
         // JavaFX Player
-        if(player1.isPresent()) {
+        if (player1.isPresent()) {
             setPlayerData(labelPlayerGui, game, player1.get());
             updateStacker(cardDeckStacker, player1.get());
             updateDisplayedCards(
