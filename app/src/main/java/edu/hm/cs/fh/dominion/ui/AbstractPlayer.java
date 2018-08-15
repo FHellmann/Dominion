@@ -45,7 +45,7 @@ public abstract class AbstractPlayer implements UserInterface {
      * @param game  of datastoreage.
      * @param logic for every logical check.
      */
-    public AbstractPlayer(final ReadonlyGame game, final Logic logic) {
+    AbstractPlayer(final ReadonlyGame game, final Logic logic) {
         this.game = game;
         this.logic = logic;
         game.addObserver(this);

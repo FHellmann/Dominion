@@ -27,8 +27,7 @@ public class NetIO implements ContentIO {
     /**
      * The server where the communication goes over.
      */
-    private final Optional<NetServer> server;
-
+    private final NetServer server;
     private final NetClient client;
 
     /**
@@ -40,11 +39,11 @@ public class NetIO implements ContentIO {
         // init Server if necessary
         final Optional<String> serverHost = NetServer.isAvailable();
         if (serverHost.isPresent()) {
-            server = Optional.empty();
+            server = null;
         } else {
             final NetServer server = new NetServer();
             server.start();
-            this.server = Optional.of(server);
+            this.server = server;
         }
 
         final String host = serverHost.orElse(InetAddress.getLocalHost().getHostName());
@@ -64,7 +63,7 @@ public class NetIO implements ContentIO {
     @Override
     public void close() throws IOException {
         client.close();
-        server.ifPresent(NetServer::stop);
+        Optional.ofNullable(server).ifPresent(NetServer::stop);
     }
 
     private static final class NetServer {
@@ -75,12 +74,12 @@ public class NetIO implements ContentIO {
 
         private final ExecutorService services;
 
-        public NetServer() throws IOException {
+        NetServer() throws IOException {
             serverSocket = new ServerSocket(SOCKET_PORT);
             services = Executors.newCachedThreadPool();
         }
 
-        public void start() {
+        void start() {
             services.execute(() -> {
                 while (!services.isShutdown()) {
                     try {
@@ -93,11 +92,11 @@ public class NetIO implements ContentIO {
             });
         }
 
-        public void stop() {
+        void stop() {
             services.shutdown();
         }
 
-        public static Optional<String> isAvailable() {
+        static Optional<String> isAvailable() {
             try {
                 Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
                 while (interfaces.hasMoreElements()) {
@@ -148,7 +147,7 @@ public class NetIO implements ContentIO {
          */
         private final Scanner in;
 
-        public NetClient(final Socket socket) throws IOException {
+        NetClient(final Socket socket) throws IOException {
             this.socket = socket;
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);

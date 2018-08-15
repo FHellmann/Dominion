@@ -1,5 +1,3 @@
-apply plugin: 'application'
-
 dependencies {
     implementation project(':domain')
 }

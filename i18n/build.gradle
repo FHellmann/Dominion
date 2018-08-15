@@ -1,4 +1,2 @@
-apply plugin: 'application'
-
 dependencies {
 }

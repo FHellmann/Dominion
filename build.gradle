@@ -1,19 +1,4 @@
 apply plugin: 'idea'
-
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-}
-
-allprojects {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-}
-
 apply from: file('gradle/check.gradle')
 
 subprojects {
@@ -22,21 +7,26 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
     sourceSets {
         main {
             java {
-                srcDirs= ["src/main/java"]
+                srcDirs = ['src/main/java']
             }
             resources {
-                srcDirs= ["src/main/resources"]
+                srcDirs = ['src/main/resources']
             }
         }
         test {
             java {
-                srcDirs= ["src/test/java"]
+                srcDirs = ['src/test/java']
             }
             resources {
-                srcDirs= ["src/test/resources"]
+                srcDirs = ['src/test/resources']
             }
         }
     }
