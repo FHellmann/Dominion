@@ -40,8 +40,7 @@ public final class CheckFactory {
      * @return a check object for reviewing.
      */
     public static Check isCardNotInSupply() {
-        return (game, player, card) -> new MoveResult(game.getSupplyCardSet()
-                .filter(supplyCard -> supplyCard.equals(card)).count() == 0, "The supply already contains this card.");
+        return (game, player, card) -> new MoveResult(game.getSupplyCardSet().noneMatch(supplyCard -> supplyCard.equals(card)), "The supply already contains this card.");
     }
 
     /**
@@ -50,8 +49,7 @@ public final class CheckFactory {
      * @return a check object for reviewing.
      */
     public static Check isCardInSupply() {
-        return (game, player, card) -> new MoveResult(game.getSupplyCardSet()
-                .filter(supplyCard -> supplyCard.equals(card)).count() > 0, "The supply does not contains this card.");
+        return (game, player, card) -> new MoveResult(game.getSupplyCardSet().anyMatch(supplyCard -> supplyCard.equals(card)), "The supply does not contains this card.");
     }
 
     /**
@@ -159,8 +157,7 @@ public final class CheckFactory {
      * @return a check object for reviewing.
      */
     public static Check isAttackCard(final Card... cards) {
-        return (game, player, card) -> new MoveResult(Stream.of(cards).parallel()
-                .filter(possibleCard -> possibleCard == game.getAttackCard().get()).count() > 0,
+        return (game, player, card) -> new MoveResult(Stream.of(cards).parallel().anyMatch(possibleCard -> possibleCard == game.getAttackCard().get()),
                 "This card is not one of the possible ones.");
     }
 

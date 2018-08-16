@@ -51,14 +51,8 @@ public abstract class AbstractPlayer implements UserInterface {
         game.addObserver(this);
     }
 
-    @Override
     public ReadonlyGame getGame() {
         return game;
-    }
-
-    @Override
-    public Logic getLogic() {
-        return logic;
     }
 
     @Override

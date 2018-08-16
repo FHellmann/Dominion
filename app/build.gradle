@@ -2,17 +2,12 @@ apply plugin: 'application'
 
 mainClassName = 'edu.hm.cs.fh.dominion.DominionMain'
 
-jar {
-    baseName = 'dominion'
-    version =  '1.0.0'
-}
-
 dependencies {
     implementation project(':domain')
     implementation project(':core')
     implementation project(':i18n')
+    implementation 'com.google.guava:guava:26.0-jre'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'org.json:json:20180813'
 }
 
 run.doFirst {

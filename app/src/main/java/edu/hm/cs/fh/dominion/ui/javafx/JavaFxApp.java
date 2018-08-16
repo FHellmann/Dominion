@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class JavaFxApp extends Application {
@@ -32,7 +33,6 @@ public class JavaFxApp extends Application {
      */
     private static List<UserInterface> createPlayers(final ArgumentsParser argsParser, final WriteableGame game,
                                                      final Logic logic) {
-        final List<UserInterface> uis = new ArrayList<>();
         // Intialize players
         @SuppressWarnings("unchecked") final List<UserInterface> players = argsParser
                 .getPlayers()
@@ -50,7 +50,7 @@ public class JavaFxApp extends Application {
                 })
                 .peek(System.out::println)
                 .collect(Collectors.toList());
-        uis.addAll(players);
+        final List<UserInterface> uis = new ArrayList<>(players);
         return uis;
     }
 
@@ -103,7 +103,7 @@ public class JavaFxApp extends Application {
         final AnchorPane root = new AnchorPane();
         root.setManaged(true);
         root.getChildren().addAll(loadScreen);
-        root.getStylesheets().add(getClass().getClassLoader().getResource("javafx/application.css").toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/application.css")).toExternalForm());
 
         // Fit mainContainer to layout
         AnchorPane.setTopAnchor(loadScreen, 0.0);

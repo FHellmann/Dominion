@@ -3,11 +3,11 @@
  */
 package edu.hm.cs.fh.dominion.test;
 
-import java.io.IOException;
-
 import edu.hm.cs.fh.dominion.DominionMain;
 import edu.hm.cs.fh.dominion.ui.Recorder;
 import edu.hm.cs.fh.dominion.ui.Replayer;
+
+import java.io.IOException;
 
 /**
  * Tests the system
@@ -15,7 +15,7 @@ import edu.hm.cs.fh.dominion.ui.Replayer;
  * @author Fabio Hellmann, info@fabio-hellmann.de
  * @version 23.05.2014
  */
-public class SystemTestReplayer {
+class SystemTestReplayer {
 	/**
 	 * Starts the system test.
 	 *

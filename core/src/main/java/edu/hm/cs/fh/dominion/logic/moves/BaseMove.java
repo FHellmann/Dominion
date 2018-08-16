@@ -42,7 +42,7 @@ public abstract class BaseMove implements Move {
      *
      * @param game to modify.
      */
-    public BaseMove(final WriteableGame game) {
+    BaseMove(final WriteableGame game) {
         this(game, null, null);
     }
 
@@ -52,7 +52,7 @@ public abstract class BaseMove implements Move {
      * @param game   to modify.
      * @param player who want's to play the move.
      */
-    public BaseMove(final WriteableGame game, final WriteablePlayer player) {
+    protected BaseMove(final WriteableGame game, final WriteablePlayer player) {
         this(game, player, null);
     }
 
@@ -63,7 +63,7 @@ public abstract class BaseMove implements Move {
      * @param player who want's to play the move.
      * @param card   to play.
      */
-    public BaseMove(final WriteableGame game, final WriteablePlayer player, final Card card) {
+    protected BaseMove(final WriteableGame game, final WriteablePlayer player, final Card card) {
         this.game = game;
         this.player = player;
         this.card = card;
@@ -74,7 +74,7 @@ public abstract class BaseMove implements Move {
      *
      * @return the game.
      */
-    public WriteableGame getGame() {
+    protected WriteableGame getGame() {
         return game;
     }
 
@@ -83,7 +83,7 @@ public abstract class BaseMove implements Move {
      *
      * @return the player.
      */
-    public Optional<WriteablePlayer> getPlayer() {
+    protected Optional<WriteablePlayer> getPlayer() {
         return Optional.ofNullable(player);
     }
 
@@ -106,7 +106,7 @@ public abstract class BaseMove implements Move {
     /**
      * Will be called if the {@link MoveResult} from the {@link #test()} was possible.
      */
-    public abstract void onFire();
+    protected abstract void onFire();
 
     @Override
     public final MoveResult test() {
@@ -129,6 +129,8 @@ public abstract class BaseMove implements Move {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName().toLowerCase();
+        return getClass().getSimpleName().toLowerCase()
+                + getPlayer().map(player -> " as " + player.getName()).orElse("")
+                + getCard().map(card -> " played " + card.getName()).orElse("");
     }
 }

@@ -5,11 +5,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
-  <children>
-    <ListView layoutX="1587.0" layoutY="509.0" prefHeight="557.0" prefWidth="319.0" styleClass="move-list" />
-  </children>
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.hm.cs.fh.dominion.ui.javafx.GuiController">
   <stylesheets>
-    <URL value="@application.css" />
+    <URL value="@application.css"/>
   </stylesheets>
+  <ListView layoutX="1587.0" layoutY="509.0" prefHeight="557.0" prefWidth="319.0" styleClass="move-list"/>
 </AnchorPane>

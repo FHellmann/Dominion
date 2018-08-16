@@ -18,19 +18,6 @@ import java.util.*;
  * @version 21.04.2014
  */
 public interface UserInterface extends Observer {
-    /**
-     * Get the read-only-game.
-     *
-     * @return the game.
-     */
-    ReadonlyGame getGame();
-
-    /**
-     * Get the logic module for logical checks.
-     *
-     * @return the logic.
-     */
-    Logic getLogic();
 
     /**
      * Get the read-only-player.

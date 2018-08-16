@@ -9,7 +9,7 @@ package edu.hm.cs.fh.dominion.database.full;
  * @author Fabio Hellmann, info@fabio-hellmann.de
  * @version 29.03.2014
  */
-public interface Changeable {
+interface Changeable {
     /**
      * Notify the changeable that something changed.
      */

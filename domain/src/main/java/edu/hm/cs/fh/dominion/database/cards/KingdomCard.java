@@ -143,7 +143,7 @@ public enum KingdomCard implements Card<KingdomMetaData> {
     /**
      * Throne room card
      */
-    THRONEROOM(game -> game.setState(State.ACTION_RESOLVE), 4, Type.ACTION),
+    //THRONEROOM(game -> game.setState(State.ACTION_RESOLVE), 4, Type.ACTION),
     // /** Rebuilding card */
     // REBUILDING(game -> {
     // game.setState(State.ACTION_RESOLVE);

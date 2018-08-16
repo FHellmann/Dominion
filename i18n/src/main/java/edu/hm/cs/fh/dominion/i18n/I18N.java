@@ -11,7 +11,7 @@ import java.util.Optional;
  * @author Fabio Hellmann, info@fabio-hellmann.de
  * @version 11.04.2014
  */
-public interface I18N {
+interface I18N {
     /**
      * Localize the text of the key.
      *

@@ -33,7 +33,7 @@ public abstract class AbstractRobotAI extends AbstractRegisteredPlayer {
      * @param logic for every logical check.
      * @param name  of the robot.
      */
-    public AbstractRobotAI(final ReadonlyGame game, final Logic logic, final String name) {
+    AbstractRobotAI(final ReadonlyGame game, final Logic logic, final String name) {
         super(game, logic, name);
     }
 

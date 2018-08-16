@@ -499,7 +499,7 @@ public class GuiController implements Initializable, Observer {
         }
     }
 
-    public ReadonlyGame getGame() {
+    private ReadonlyGame getGame() {
         return game;
     }
 

@@ -25,7 +25,7 @@ public class ArgumentsParser {
     /**
      * The platform dependend new line.
      */
-    protected static final String NEW_LINE = System.getProperty("line.separator");
+    private static final String NEW_LINE = System.getProperty("line.separator");
     /**
      * The constant for help as sign.
      */
@@ -70,7 +70,7 @@ public class ArgumentsParser {
      * @param args to parse.
      */
     public ArgumentsParser(final List<String> args) {
-        constants = args.parallelStream().filter(arg -> !arg.contains("=")).map(arg -> arg)
+        constants = args.parallelStream().filter(arg -> !arg.contains("="))
                 .collect(Collectors.toList());
         players = args.parallelStream().filter(arg -> arg.contains("=")).map(arg -> arg.split("="))
                 .collect(Collectors.toMap(arg -> arg[1], arg -> arg[0]));
@@ -194,6 +194,6 @@ public class ArgumentsParser {
      * @param playerClass to get the SimpleClassName from.
      */
     private static void appendPlayer(final StringBuilder string, final Class<?> playerClass, final String description) {
-        string.append("\t" + playerClass.getSimpleName() + "=<name>\t " + description + NEW_LINE);
+        string.append("\t").append(playerClass.getSimpleName()).append("=<name>\t ").append(description).append(NEW_LINE);
     }
 }

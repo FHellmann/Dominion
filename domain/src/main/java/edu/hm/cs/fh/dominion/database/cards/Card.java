@@ -1,6 +1,5 @@
 package edu.hm.cs.fh.dominion.database.cards;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -24,17 +23,6 @@ public interface Card<M extends Card.MetaData> {
      * @return the name.
      */
     String getName();
-
-    /**
-     * Find all cards matching the type.
-     *
-     * @param cards to search in.
-     * @param type  to match.
-     * @return a list with matching cards.
-     */
-    static Stream<Card> findAll(final List<Card> cards, final Type type) {
-        return cards.parallelStream().filter(card -> card.getMetaData().hasType(type));
-    }
 
     /**
      * Different types of the cards.

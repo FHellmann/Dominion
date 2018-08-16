@@ -90,55 +90,52 @@ public class Recorder extends AbstractPlayer {
         final Optional<ReadonlyPlayer> attacker = game.getAttacker();
         final int supplyCardCount = game.getSupplySize();
         // Just put the cards around to get them every time in the same order
-        final List<String> supplyCardNameList = game.getSupplyCardSet()
-                .map(Object::toString)
-                .collect(Collectors.toList());
-        final Set<String> sortedSupplyCardSet = new TreeSet<>(supplyCardNameList);
+        final Set<String> sortedSupplyCardSet = game.getSupplyCardSet()
+                .map(Object::toString).collect(Collectors.toCollection(TreeSet::new));
         final Optional<Card> resolveActionCard = game.getToResolveActionCard();
         final ReadonlyCardDeck waste = game.getWaste();
 
-        final StringBuilder gameState = new StringBuilder()
-                .append("{ State: ")
-                .append(state)
-                .append(" }")
-                .append(",")
-                .append("{ PlayerCount: ")
-                .append(playerCount)
-                .append(" }")
-                .append(",")
-                .append("{ CurrentPlayer: ")
-                .append(getPlayerData(currentPlayer))
-                .append(" }")
-                .append(",")
-                .append("{ Players: ")
-                .append(players.map(player -> "{ Player: " + getPlayerData(player) + " }").collect(
-                        Collectors.joining(", ")))
-                .append(" }")
-                .append(",")
-                .append("{ AttackCard: ")
-                .append(attackCard.isPresent() ? attackCard.get() : "null")
-                .append(" }")
-                .append(",")
-                .append("{ Attacker: ")
-                .append(attacker.isPresent() ? attacker.get().getName() : "null")
-                .append(" }")
-                .append(",")
-                .append("{ SupplyCardCount: ")
-                .append(supplyCardCount)
-                .append(" }")
-                .append(",")
-                .append("{ SupplyCards: ")
-                .append(sortedSupplyCardSet
+        String gameState = "{ State: " +
+                state +
+                " }" +
+                "," +
+                "{ PlayerCount: " +
+                playerCount +
+                " }" +
+                "," +
+                "{ CurrentPlayer: " +
+                getPlayerData(currentPlayer) +
+                " }" +
+                "," +
+                "{ Players: " +
+                players.map(player -> "{ Player: " + getPlayerData(player) + " }").collect(
+                        Collectors.joining(", ")) +
+                " }" +
+                "," +
+                "{ AttackCard: " +
+                (attackCard.isPresent() ? attackCard.get() : "null") +
+                " }" +
+                "," +
+                "{ Attacker: " +
+                (attacker.isPresent() ? attacker.get().getName() : "null") +
+                " }" +
+                "," +
+                "{ SupplyCardCount: " +
+                supplyCardCount +
+                " }" +
+                "," +
+                "{ SupplyCards: " +
+                sortedSupplyCardSet
                         .stream()
                         .map(cardName -> cardName
                                 + "("
                                 + game.getSupplyCardCount(game.getSupplyCardSet()
                                 .filter(card -> card.toString().equals(cardName)).findFirst().get()) + ")")
-                        .collect(Collectors.joining(", "))).append(" }").append(",").append("{ ResolveActionCard: ")
-                .append(resolveActionCard.isPresent() ? resolveActionCard.get() : "null").append(" }").append(",")
-                .append("{ Waste: ").append(getCarddeckData(waste)).append(" }");
-
-        return gameState.toString();
+                        .collect(Collectors.joining(", ")) +
+                " }" + "," + "{ ResolveActionCard: " +
+                (resolveActionCard.isPresent() ? resolveActionCard.get() : "null") + " }" + "," +
+                "{ Waste: " + getCarddeckData(waste) + " }";
+        return gameState;
     }
 
     /**
@@ -148,16 +145,16 @@ public class Recorder extends AbstractPlayer {
      * @return the data string.
      */
     private static String getPlayerData(final ReadonlyPlayer player) {
-        final StringBuilder playerData = new StringBuilder().append("{ ").append("Name: ").append(player.getName())
-                .append(", ").append("Actions: ").append(player.getActions().getCount()).append(", ").append("Coins: ")
-                .append(player.getMoney().getCount()).append(", ").append("Buys: ")
-                .append(player.getPurchases().getCount()).append(", ").append("Points: ")
-                .append(player.getVictoryPoints().getCount()).append(", ").append("Hand: ")
-                .append(getCarddeckData(player.getCardDeckHand())).append(", ").append("Pull: ")
-                .append(getCarddeckData(player.getCardDeckPull())).append(", ").append("Played: ")
-                .append(getCarddeckData(player.getCardDeckPlayed())).append(", ").append("Stacker: ")
-                .append(getCarddeckData(player.getCardDeckStacker())).append(" }");
-        return playerData.toString();
+        String playerData = "{ " + "Name: " + player.getName() +
+                ", " + "Actions: " + player.getActions().getCount() + ", " + "Coins: " +
+                player.getMoney().getCount() + ", " + "Buys: " +
+                player.getPurchases().getCount() + ", " + "Points: " +
+                player.getVictoryPoints().getCount() + ", " + "Hand: " +
+                getCarddeckData(player.getCardDeckHand()) + ", " + "Pull: " +
+                getCarddeckData(player.getCardDeckPull()) + ", " + "Played: " +
+                getCarddeckData(player.getCardDeckPlayed()) + ", " + "Stacker: " +
+                getCarddeckData(player.getCardDeckStacker()) + " }";
+        return playerData;
     }
 
     /**
@@ -167,9 +164,7 @@ public class Recorder extends AbstractPlayer {
      * @return the data string.
      */
     private static String getCarddeckData(final ReadonlyCardDeck carddeck) {
-        final StringBuilder carddeckData = new StringBuilder();
-        carddeckData.append("{ ").append(carddeck.toString()).append(" }");
-        return carddeckData.toString();
+        return "{ " + carddeck.toString() + " }";
     }
 
     @Override

@@ -3,7 +3,6 @@
  */
 package edu.hm.cs.fh.dominion.i18n;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -13,11 +12,6 @@ import java.util.*;
  * @version 11.04.2014
  */
 public class I18nFilesHandler implements I18N {
-    /**
-     * A seperator associated by the OS.
-     */
-    private static final String ESCAPED_FILE_SEPERATOR = Character.toString(File.separatorChar)
-            + Character.toString(File.separatorChar);
     /**
      * The fileprefix for languages.
      */
@@ -38,16 +32,13 @@ public class I18nFilesHandler implements I18N {
     /**
      * Create to get the card settings and language.
      *
-     * @throws MissingResourceException
+     * @throws MissingResourceException is thrown when the resource file could not be found.
      */
     I18nFilesHandler() throws MissingResourceException {
         Locale locale = Locale.getDefault();
         if (!SUPPORTED_LOCALES.contains(locale)) {
             locale = DEFAULT_LOCALE;
         }
-
-        // generate the path to the *.properties files
-        final String path = getClass().getPackage().getName().replaceAll("\\.", ESCAPED_FILE_SEPERATOR);
 
         // create the ResourceBundle
         bundleI18N = ResourceBundle.getBundle(DOMINION_LANGUAGE, locale);

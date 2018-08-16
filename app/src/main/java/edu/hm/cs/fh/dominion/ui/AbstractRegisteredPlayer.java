@@ -25,7 +25,7 @@ public abstract class AbstractRegisteredPlayer extends AbstractPlayer {
      * @param logic for every logical check.
      * @param name  of the player.
      */
-    public AbstractRegisteredPlayer(final ReadonlyGame game, final Logic logic, final String name) {
+    protected AbstractRegisteredPlayer(final ReadonlyGame game, final Logic logic, final String name) {
         super(game, logic);
         player = logic.registerNewPlayer(name);
     }

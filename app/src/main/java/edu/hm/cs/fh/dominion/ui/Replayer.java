@@ -105,16 +105,14 @@ public class Replayer extends AbstractPlayer {
         final List<String> playerNames = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(TEMP_DIRECTORY_DOMINION, filename)))) {
             final String line = reader.lines().skip(1).findFirst().get();
-            if (playerNames.isEmpty()) {
-                // extract player names
-                final Matcher matcherAllPlayers = PATTERN_PLAYER_NAMES.matcher(line);
-                while (matcherAllPlayers.find()) {
-                    final String playerName = matcherAllPlayers.group(1);
-                    if (!playerNames.contains(playerName)) {
-                        // If player is not in the list yet --> add the name at the last
-                        // position
-                        playerNames.add(playerNames.size(), playerName);
-                    }
+            // extract player names
+            final Matcher matcherAllPlayers = PATTERN_PLAYER_NAMES.matcher(line);
+            while (matcherAllPlayers.find()) {
+                final String playerName = matcherAllPlayers.group(1);
+                if (!playerNames.contains(playerName)) {
+                    // If player is not in the list yet --> add the name at the last
+                    // position
+                    playerNames.add(playerNames.size(), playerName);
                 }
             }
         }

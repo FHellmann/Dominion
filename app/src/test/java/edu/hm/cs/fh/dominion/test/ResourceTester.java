@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @author Fabio Hellmann, info@fabio-hellmann.de
  * @version 11.04.2014
  */
-public class ResourceTester {
+class ResourceTester {
 	@SuppressWarnings("javadoc")
 	public static void main(final String[] args) {
 		Arrays.asList(VictoryCard.values()).forEach(card -> System.out.println(card.getName()));

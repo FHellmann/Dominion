@@ -29,7 +29,7 @@ public class FileIO implements ContentIO {
 
     @Override
     public void sendOutput(final String text) {
-        writer.append(text + "\n");
+        writer.append(text).append("\n");
         writer.flush();
     }
 

@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 
 import java.util.List;
 import java.util.MissingFormatArgumentException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -62,7 +63,7 @@ public class MoveSelectorOverlay {
 
         // Display all possible moves in a listview on the right bottom
         final ListView<I18nMove> moveList = new ListView<>(FXCollections.observableArrayList(moves));
-        moveList.getStylesheets().add(getClass().getClassLoader().getResource("javafx/application.css").toExternalForm());
+        moveList.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/application.css")).toExternalForm());
         moveList.setLayoutX(1500.0);
         moveList.setLayoutY(659.0);
         moveList.setPrefWidth(406.0);

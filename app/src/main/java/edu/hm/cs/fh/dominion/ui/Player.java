@@ -12,6 +12,7 @@ public enum Player {
     ROBOT_MILITIA(RobotMilitia.class.getName()),
     ROBOT_SORCERER(RobotSorcerer.class.getName()),
     ROBOT_X(RobotX.class.getName()),
+    ROBOT_REINFORCED(RobotReinforced.class.getName()),
     /* HUMAN */
     JAVA_FX_PLAYER(JavaFxPlayer.class.getName()),
     CONSOLE_PLAYER(ConsolePlayer.class.getName()),
