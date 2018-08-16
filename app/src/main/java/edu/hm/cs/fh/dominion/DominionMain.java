@@ -48,7 +48,7 @@ public class DominionMain {
             if (argsParser.isRecorderActivated()) {
                 // Initialize and add the Recorder
                 Settings.setReplayable();
-                uis.add(new Recorder(game, logic, argsParser.getRecordFilePath()));
+                uis.add(new Recorder(game, logic, argsParser.getRecordFilename()));
             }
 
             if (argsParser.isPublicViewerActivated()) {
@@ -79,10 +79,10 @@ public class DominionMain {
         if (argsParser.isReplayerActivated()) {
             // Intialize replayers
             Settings.setReplayable();
-            final int replayerCount = Replayer.extractPlayerNames(argsParser.getReplayFilePath()).size();
+            final int replayerCount = Replayer.extractPlayerNames(argsParser.getReplayFilename()).size();
             Stream.iterate(0, count -> count + 1).limit(replayerCount).forEach(ignore -> {
                 try {
-                    uis.add(new Replayer(game, logic, argsParser.getReplayFilePath()));
+                    uis.add(new Replayer(game, logic, argsParser.getReplayFilename()));
                 } catch (final Exception e) {
                     throw new RuntimeException("The Replayer could not be initialized.", e);
                 }
@@ -103,7 +103,6 @@ public class DominionMain {
                             throw new RuntimeException(e);
                         }
                     })
-                    .peek(System.out::println)
                     .collect(Collectors.toList());
             uis.addAll(players);
         }

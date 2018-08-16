@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -39,7 +40,7 @@ public class Replayer extends AbstractPlayer {
     /**
      * The moves to play as string.
      */
-    private final List<String> textMoves;
+    private final Queue<String> textMoves = new LinkedBlockingQueue<>();
     /**
      * The player this one represents.
      */
@@ -57,13 +58,17 @@ public class Replayer extends AbstractPlayer {
         super(game, logic);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(TEMP_DIRECTORY_DOMINION, filename)))) {
-            textMoves = reader.lines().filter(line -> line.charAt(0) == '#').map(line -> line.substring(1))
-                    .collect(Collectors.toList());
+            textMoves.addAll(reader.lines()
+                    .filter(line -> line.charAt(0) == '#')
+                    .map(line -> line.substring(1))
+                    .collect(Collectors.toList()));
         }
 
         // Find first free player name and take it
-        final String firstFreePlayerName = extractPlayerNames(filename).stream().skip(game.getPlayerCount())
-                .findFirst().get();
+        final String firstFreePlayerName = extractPlayerNames(filename).stream()
+                .skip(game.getPlayerCount())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
         player = logic.registerNewPlayer(firstFreePlayerName);
     }
 
@@ -74,8 +79,11 @@ public class Replayer extends AbstractPlayer {
 
     @Override
     public Move selectMove(final List<Move> moves) {
-        final String nextMove = textMoves.get(0);
-        return moves.parallelStream().filter(move -> nextMove.equals(move.toString())).findFirst().get();
+        final String nextMove = textMoves.peek();
+        return moves.stream()
+                .filter(move -> Objects.equals(nextMove, move.toString()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("There is no move '" + nextMove + "' in '" + moves + "' available"));
     }
 
     @Override
@@ -84,10 +92,10 @@ public class Replayer extends AbstractPlayer {
             // keep the locale default save
             final Locale realLocale = Locale.getDefault();
             // just set the default locale for the record file output
-            Locale.setDefault(Locale.GERMAN);
+            Locale.setDefault(Locale.ENGLISH);
 
             // remove the move from the list
-            textMoves.remove(object.toString());
+            textMoves.remove();
 
             // reset the locale to saved default
             Locale.setDefault(realLocale);
@@ -104,7 +112,7 @@ public class Replayer extends AbstractPlayer {
     public static List<String> extractPlayerNames(final String filename) throws IOException {
         final List<String> playerNames = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(TEMP_DIRECTORY_DOMINION, filename)))) {
-            final String line = reader.lines().skip(1).findFirst().get();
+            final String line = reader.lines().skip(1).findFirst().orElseThrow(IllegalStateException::new);
             // extract player names
             final Matcher matcherAllPlayers = PATTERN_PLAYER_NAMES.matcher(line);
             while (matcherAllPlayers.find()) {

@@ -79,7 +79,7 @@ public class JavaFxApp extends Application {
         if (argsParser.isRecorderActivated()) {
             // Initialize and add the Recorder
             Settings.setReplayable();
-            uis.add(new Recorder(game, logic, argsParser.getRecordFilePath()));
+            uis.add(new Recorder(game, logic, argsParser.getRecordFilename()));
         }
 
         if (argsParser.isPublicViewerActivated()) {

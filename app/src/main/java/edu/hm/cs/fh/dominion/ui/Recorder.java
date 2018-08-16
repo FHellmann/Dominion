@@ -33,7 +33,7 @@ public class Recorder extends AbstractPlayer {
     /**
      * The temp directory for the dominion files.
      */
-    private static final File TEMP_DIRECTORY_DOMINION = new File(TEMP_DIRECTORY + File.separatorChar + "Dominion");
+    static final File TEMP_DIRECTORY_DOMINION = new File(TEMP_DIRECTORY + File.separatorChar + "Dominion");
     /**
      * The output writer.
      */
@@ -64,7 +64,7 @@ public class Recorder extends AbstractPlayer {
             // keep the locale default save
             final Locale realLocale = Locale.getDefault();
             // just set the default locale for the record file output
-            Locale.setDefault(Locale.GERMAN);
+            Locale.setDefault(Locale.ENGLISH);
 
             // write the output
             inOut.sendOutput("#" + object.toString());
@@ -95,7 +95,7 @@ public class Recorder extends AbstractPlayer {
         final Optional<Card> resolveActionCard = game.getToResolveActionCard();
         final ReadonlyCardDeck waste = game.getWaste();
 
-        String gameState = "{ State: " +
+        return "{ State: " +
                 state +
                 " }" +
                 "," +
@@ -135,7 +135,6 @@ public class Recorder extends AbstractPlayer {
                 " }" + "," + "{ ResolveActionCard: " +
                 (resolveActionCard.isPresent() ? resolveActionCard.get() : "null") + " }" + "," +
                 "{ Waste: " + getCarddeckData(waste) + " }";
-        return gameState;
     }
 
     /**
@@ -145,7 +144,7 @@ public class Recorder extends AbstractPlayer {
      * @return the data string.
      */
     private static String getPlayerData(final ReadonlyPlayer player) {
-        String playerData = "{ " + "Name: " + player.getName() +
+        return "{ " + "Name: " + player.getName() +
                 ", " + "Actions: " + player.getActions().getCount() + ", " + "Coins: " +
                 player.getMoney().getCount() + ", " + "Buys: " +
                 player.getPurchases().getCount() + ", " + "Points: " +
@@ -154,7 +153,6 @@ public class Recorder extends AbstractPlayer {
                 getCarddeckData(player.getCardDeckPull()) + ", " + "Played: " +
                 getCarddeckData(player.getCardDeckPlayed()) + ", " + "Stacker: " +
                 getCarddeckData(player.getCardDeckStacker()) + " }";
-        return playerData;
     }
 
     /**

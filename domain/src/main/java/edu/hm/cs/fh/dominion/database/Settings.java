@@ -105,6 +105,14 @@ public final class Settings {
      */
     private static final long RANDOM_SEED = 42;
     /**
+     * The random to replay games.
+     */
+    private static final Random REPLAY_RANDOM = new Random(RANDOM_SEED);
+    /**
+     * The default random.
+     */
+    private static final Random DEFAULT_RANDOM = new Random();
+    /**
      * Let the game replay if it is true.
      */
     private static boolean replay;
@@ -122,13 +130,11 @@ public final class Settings {
      * @return a random.
      */
     public static Random getRandom() {
-        Random random;
         if (replay) {
-            random = new Random(RANDOM_SEED);
+            return REPLAY_RANDOM;
         } else {
-            random = new Random();
+            return DEFAULT_RANDOM;
         }
-        return random;
     }
 
     /**

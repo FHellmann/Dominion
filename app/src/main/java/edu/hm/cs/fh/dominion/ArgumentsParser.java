@@ -6,6 +6,7 @@ package edu.hm.cs.fh.dominion;
 import edu.hm.cs.fh.dominion.ui.ConsolePlayer;
 import edu.hm.cs.fh.dominion.ui.JavaFxPlayer;
 import edu.hm.cs.fh.dominion.ui.NetPlayer;
+import edu.hm.cs.fh.dominion.ui.Replayer;
 import edu.hm.cs.fh.dominion.ui.ai.*;
 
 import java.util.Arrays;
@@ -60,7 +61,7 @@ public class ArgumentsParser {
      *
      * @param args to parse.
      */
-    public ArgumentsParser(final String[] args) {
+    ArgumentsParser(final String[] args) {
         this(Arrays.asList(args));
     }
 
@@ -70,9 +71,12 @@ public class ArgumentsParser {
      * @param args to parse.
      */
     public ArgumentsParser(final List<String> args) {
-        constants = args.parallelStream().filter(arg -> !arg.contains("="))
+        constants = args.stream().filter(arg -> !arg.contains("="))
                 .collect(Collectors.toList());
-        players = args.parallelStream().filter(arg -> arg.contains("=")).map(arg -> arg.split("="))
+        players = args.stream()
+                .filter(arg -> arg.contains("="))
+                .filter(arg -> !arg.startsWith(Replayer.class.getSimpleName()))
+                .map(arg -> arg.split("="))
                 .collect(Collectors.toMap(arg -> arg[1], arg -> arg[0]));
     }
 
@@ -91,7 +95,7 @@ public class ArgumentsParser {
      *
      * @return <code>true</code> if a JavaFxPlayerApp exists.
      */
-    public boolean isJavaFxApplication() {
+    boolean isJavaFxApplication() {
         return players.values().parallelStream()
                 .anyMatch(key -> key.equals(JavaFxPlayer.class.getSimpleName()));
     }
@@ -106,11 +110,11 @@ public class ArgumentsParser {
     }
 
     /**
-     * Get the filepath the recorder has to write to.
+     * Get the filename the recorder has to write to.
      *
-     * @return the filepath.
+     * @return the filename.
      */
-    public String getRecordFilePath() {
+    public String getRecordFilename() {
         return constants.get(constants.indexOf(ARG_RECORDER) + 1);
     }
 
@@ -119,16 +123,16 @@ public class ArgumentsParser {
      *
      * @return <code>true</code> if a Recorder exists.
      */
-    public boolean isReplayerActivated() {
+    boolean isReplayerActivated() {
         return constants.contains(ARG_REPLAYER);
     }
 
     /**
-     * Get the filepath the replayer has to read the commands from.
+     * Get the filename the replayer has to read the commands from.
      *
-     * @return the filepath.
+     * @return the filename.
      */
-    public String getReplayFilePath() {
+    String getReplayFilename() {
         return constants.get(constants.indexOf(ARG_REPLAYER) + 1);
     }
 
@@ -146,14 +150,14 @@ public class ArgumentsParser {
      *
      * @return <code>true</code> if a Recorder exists.
      */
-    public boolean isHelpRequired() {
+    boolean isHelpRequired() {
         return constants.contains(ARG_HELP_ABC) | constants.contains(ARG_HELP);
     }
 
     /**
      * Display all options.
      */
-    public void showArguments() {
+    void showArguments() {
         final StringBuilder strBuilder = new StringBuilder(529);
         strBuilder
                 .append("########### DOMINION ###########")
@@ -168,7 +172,7 @@ public class ArgumentsParser {
                 .append(NEW_LINE)
                 .append("\t"
                         + ARG_REPLAYER
-                        + " <filepath> \t allows you to automaticly replay the game from a recorded game file.allows you to automaticly replay the game from a recorded game file. This will grab the file from the temp-directory/Dominion/<filename>.")
+                        + " <filename> \t allows you to automaticly replay the game from a recorded game file. This will grab the file from the temp-directory/Dominion/<filename>.")
                 .append(NEW_LINE)
                 .append("\t"
                         + ARG_PUBLICVIEWER
