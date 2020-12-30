@@ -58,18 +58,26 @@ public class Replayer extends AbstractPlayer {
         super(game, logic);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(TEMP_DIRECTORY_DOMINION, filename)))) {
+            // Extract moves
             textMoves.addAll(reader.lines()
                     .filter(line -> line.charAt(0) == '#')
                     .map(line -> line.substring(1))
                     .collect(Collectors.toList()));
-        }
 
-        // Find first free player name and take it
-        final String firstFreePlayerName = extractPlayerNames(filename).stream()
-                .skip(game.getPlayerCount())
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
-        player = logic.registerNewPlayer(firstFreePlayerName);
+            // Extract game state
+            final String gameState = reader.lines()
+                    .filter(line -> line.charAt(0) != '#')
+                    .findFirst()
+                    .orElseThrow(IllegalStateException::new);
+
+            // Find first free player name and take it
+            final String firstFreePlayerName = extractPlayerNames(gameState).stream()
+                    .filter(playerName -> game.getPlayers().noneMatch(player -> player.getName().equals(playerName)))
+                    .findFirst()
+                    .orElseThrow(IllegalStateException::new);
+
+            player = logic.registerNewPlayer(firstFreePlayerName);
+        }
     }
 
     @Override
@@ -105,23 +113,17 @@ public class Replayer extends AbstractPlayer {
     /**
      * Extracts the names of all players from the recorded file.
      *
-     * @param filename of the file to extract from.
+     * @param gameState is a line of data from the game containing the players names.
      * @return the extracted names.
-     * @throws IOException is possible thrown by the reader.
      */
-    public static List<String> extractPlayerNames(final String filename) throws IOException {
-        final List<String> playerNames = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(TEMP_DIRECTORY_DOMINION, filename)))) {
-            final String line = reader.lines().skip(1).findFirst().orElseThrow(IllegalStateException::new);
-            // extract player names
-            final Matcher matcherAllPlayers = PATTERN_PLAYER_NAMES.matcher(line);
-            while (matcherAllPlayers.find()) {
-                final String playerName = matcherAllPlayers.group(1);
-                if (!playerNames.contains(playerName)) {
-                    // If player is not in the list yet --> add the name at the last
-                    // position
-                    playerNames.add(playerNames.size(), playerName);
-                }
+    public static List<String> extractPlayerNames(final String gameState) {
+        final List<String> playerNames = new LinkedList<>();
+        // extract player names
+        final Matcher matcherAllPlayers = PATTERN_PLAYER_NAMES.matcher(gameState);
+        while (matcherAllPlayers.find()) {
+            final String playerName = matcherAllPlayers.group(1);
+            if (!playerNames.contains(playerName)) {
+                playerNames.add(playerName);
             }
         }
         return playerNames;

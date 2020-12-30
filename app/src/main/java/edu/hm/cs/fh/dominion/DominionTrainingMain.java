@@ -6,26 +6,29 @@ import edu.hm.cs.fh.dominion.logic.Logic;
 import edu.hm.cs.fh.dominion.ui.UserInterface;
 import edu.hm.cs.fh.dominion.ui.ai.RobotDefender;
 import edu.hm.cs.fh.dominion.ui.ai.RobotMilitia;
-import edu.hm.cs.fh.dominion.ui.ai.RobotReinforced;
+import edu.hm.cs.fh.dominion.ui.ai.dql.RobotReinforced;
 import edu.hm.cs.fh.dominion.ui.ai.RobotSorcerer;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DominionSimulationMain {
+public class DominionTrainingMain {
     public static void main(String[] args) {
         System.out.println("Start simulation");
-        for (int iteration = 0; iteration < 15_000; iteration++) {
+        final String aiName = "C";
+        boolean aiWon = false;
+        int iteration = 0;
+        long averageTimePerEpisode = 0;
+        do {
             final long start = System.currentTimeMillis();
             final WriteableGame game = new Game();
             final Logic logic = new Logic(game);
             final List<UserInterface> uis = new ArrayList<>();
 
-            final RobotReinforced robotReinforced = new RobotReinforced(game, logic, "A");
-            final File reinforcementCache = new File("A-reinforced.json");
+            final RobotReinforced robotReinforced = new RobotReinforced(game, logic, aiName);
+            final File reinforcementCache = new File(aiName + "-reinforced.json");
             robotReinforced.loadIfAvailable(reinforcementCache);
             uis.add(robotReinforced);
             uis.add(new RobotMilitia(game, logic, "Militia"));
@@ -42,13 +45,20 @@ public class DominionSimulationMain {
                     .get()
                     .getName();
             final long timeNeeded = System.currentTimeMillis() - start;
-            final PrintStream printStream;
-            if (winnerName.equals("A")) {
-                printStream = System.err;
+
+            if (iteration % 10 == 0 && iteration > 0) {
+                averageTimePerEpisode /= 10;
+                System.out.println((iteration - 10) + "-" + iteration + ". Simulation (AVG Time needed: " + averageTimePerEpisode + " ms)");
+                averageTimePerEpisode = 0;
             } else {
-                printStream = System.out;
+                averageTimePerEpisode += timeNeeded;
             }
-            printStream.println(iteration + ". Simulation -> Result: " + winnerName + " (Time needed: " + timeNeeded + " ms)");
-        }
+            iteration++;
+
+            if (winnerName.equals(aiName)) {
+                aiWon = true;
+            }
+        } while (!aiWon);
+        System.out.println(iteration + ". Simulation the AI won!");
     }
 }

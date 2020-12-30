@@ -1,4 +1,4 @@
-package edu.hm.cs.fh.dominion.ui.ai;
+package edu.hm.cs.fh.dominion.ui.ai.dql;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -136,7 +136,7 @@ public class RobotReinforced extends AbstractRegisteredPlayer {
 
             // Update Q-Value
             historyList.add(qValueContainer);
-            qValueContainer.qValue = calculateNewQValue(qValueContainer, DEFAULT_REWARD);
+            //qValueContainer.qValue = calculateNewQValue(qValueContainer, DEFAULT_REWARD);
             return moves.stream()
                     .filter(qValueContainer.action::hasMoveClass)
                     .findFirst()
@@ -172,9 +172,17 @@ public class RobotReinforced extends AbstractRegisteredPlayer {
                     .orElseThrow(IllegalStateException::new);
             // Recalculate q values depending on reward
             if (winner.getName().equals(getPlayer().orElseThrow(IllegalStateException::new).getName())) {
-                historyList.forEach(container -> calculateNewQValue(container, FINAL_WIN_REWARD));
+                IntStream.range(0, historyList.size())
+                        .forEach(index -> {
+                            final QValueContainer container = historyList.get(index);
+                            container.qValue = calculateNewQValue(container, FINAL_WIN_REWARD / (historyList.size() - index));
+                        });
             } else {
-                historyList.forEach(container -> calculateNewQValue(container, FINAL_LOOSE_REWARD));
+                IntStream.range(0, historyList.size())
+                        .forEach(index -> {
+                            final QValueContainer container = historyList.get(index);
+                            container.qValue = calculateNewQValue(container, FINAL_LOOSE_REWARD / (historyList.size() - index));
+                        });
             }
         }
     }
@@ -232,7 +240,9 @@ public class RobotReinforced extends AbstractRegisteredPlayer {
                         .orElseThrow(IllegalStateException::new))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new)),
-        EPSILON_GREEDY(qValues -> new Random().nextDouble() >= 0.2 ? Q_MAX.strategyFunction.apply(qValues) : RANDOM.strategyFunction.apply(qValues));
+        EPSILON_GREEDY(qValues -> new Random().nextDouble() >= 0.2
+                ? Q_MAX.strategyFunction.apply(qValues)
+                : RANDOM.strategyFunction.apply(qValues));
 
         private final Function<List<QValueContainer>, Integer> strategyFunction;
 
